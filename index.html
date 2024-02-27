@@ -163,6 +163,153 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gongqihua.github.io/Blog/2024/02/27/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s2.loli.net/2024/02/27/t6ipmhvbDjX7zn5.jpg">
+      <meta itemprop="name" content="Qihua Gong">
+      <meta itemprop="description" content="Qihua Personal Blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qihua's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/Blog/2024/02/27/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" class="post-title-link" itemprop="url">搭建个人博客</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-02-27 20:43:15 / Modified: 20:45:10" itemprop="dateCreated datePublished" datetime="2024-02-27T20:43:15+08:00">2024-02-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/Blog/categories/Web/" itemprop="url" rel="index"><span itemprop="name">Web</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="个人博客搭建指北"><a href="#个人博客搭建指北" class="headerlink" title="个人博客搭建指北"></a>个人博客搭建指北</h1><p>搭建个人静态博客，Hexo+Next+Github Pages。</p>
+<p>平台：macos</p>
+<p>本地：nvm，JS一套，Hexo，Next主题</p>
+<p>网站：免费github pages，或自己搞个云服务</p>
+<h1 id="本地配置"><a href="#本地配置" class="headerlink" title="本地配置"></a>本地配置</h1><ol>
+<li><p>Xcode开发工具，带有一些基础环境和git</p>
+</li>
+<li><p>安装本地NodeJS</p>
+<ol>
+<li><p>这一步有坑，不要brew安装或者官网的sdk安装，会报错。在安装 Hexo 的过程中出现 <code>EACCES</code> 权限错误，这里不要看网上的建议，<strong>不要</strong> 使用 root、sudo 等方法覆盖权限。会报更大的错！</p>
+</li>
+<li><p>使用nvm或者nvs部署，这里用的是nvm。</p>
+<p>链接：<a target="_blank" rel="noopener" href="https://github.com/nvm-sh/nvm">https://github.com/nvm-sh/nvm</a></p>
+<p>terminal命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh</span><br></pre></td></tr></table></figure>
+
+<p>下完验证一下</p>
+<p><code>nvm -v</code></p>
+<p>如果没有，去配一下环境，别看网上一堆，要找mac zsh添加环境</p>
+</li>
+<li><p>nvm安装node和npm</p>
+<p><code>nvm install node</code> 可以指定版本，看一下nvm help</p>
+<p>装完验证一下，不行加环境变量</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br><span class="line">npm -v</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>安装Hexo</p>
+<p>精简版</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<p>也可以用完整版安装指令，装完验证，要指定版本的话记得看一下版本对应</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo -v</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>建站，创立项目文件夹</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo init &lt;folder&gt;</span><br><span class="line">cd &lt;folder&gt;</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<p>可以自定义路径，现在文件夹在主目录下，可以查看</p>
+</li>
+<li><p>在文件夹安装Next主题</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd your-hexo-site</span><br><span class="line">git clone https://github.com/iissnan/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
+
+<p>大功告成</p>
+</li>
+</ol>
+<h1 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h1><p>没有什么，是比官方文档更好使的教程！</p>
+<p>中文：<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/">https://hexo.io/zh-cn/docs/</a> 英语：<a target="_blank" rel="noopener" href="https://hexo.io/docs/index.html">https://hexo.io/docs/index.html</a></p>
+<p>创建文章，编辑source下的markdown文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new [layout] &lt;title&gt;</span><br></pre></td></tr></table></figure>
+
+<p>生成</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br></pre></td></tr></table></figure>
+
+<p>服务器预览</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<p>发布</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<h2 id="部署github"><a href="#部署github" class="headerlink" title="部署github"></a>部署github</h2><ol>
+<li><p>安装 <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo-deployer-git">hexo-deployer-git</a>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改主config.yml配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: &lt;repository url&gt; #https://bitbucket.org/JohnSmith/johnsmith.bitbucket.io</span><br><span class="line">  branch: [branch]</span><br><span class="line">  message: [message]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>生成站点文件并推送至远程库。执行 <code>hexo clean &amp;&amp; hexo deploy</code>。注意，如果是从站，config里把前面的网站URL设置一下</p>
+</li>
+</ol>
+<p><em><strong>GitHub Pages 源存储库的建议限制为1 GB。 有关详细信息，请参阅“关于GitHub 上的大文件” 发布的GitHub Pages 站点不得超过1 GB。 如果花费的时间超过10 分钟，GitHub Pages 部署将超时。</strong></em></p>
+<p><em><strong>个人主页只能创建一个，项目主页可以创建多个</strong></em></p>
+<h1 id="Next主题"><a href="#Next主题" class="headerlink" title="Next主题"></a>Next主题</h1><p>同给出官方文档链接：</p>
+<p><a target="_blank" rel="noopener" href="https://theme-next.iissnan.com/">https://theme-next.iissnan.com/</a></p>
+<p>似乎是旧版的，新版的我只找到更新日志，但是旧版大多通用</p>
+<p><a target="_blank" rel="noopener" href="https://theme-next.org/index.html">https://theme-next.org/index.html</a></p>
+<p>在config里的修改theme，即可启用主题</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">theme: next</span><br></pre></td></tr></table></figure>
+
+<p>剩下的自定义功能还是去看官方文档吧</p>
+<hr>
+<p>（ps: 第一次用typora写完一个文档，感觉好难用啊，有些本来要用上的html语法都识别不出来，:(，还有格式问题，不如直接vscode编辑，大呼上当)</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://gongqihua.github.io/Blog/2024/02/27/picture-URL/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -387,7 +534,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/Blog/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -400,7 +547,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/Blog/tags/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
