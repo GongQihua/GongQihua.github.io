@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"gongqihua.github.io","root":"/Blog/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="系统代理设置在git同步的时候，不是连不上github,就是连接超时，贼不习惯。 网上搜了一圈乱七八糟的解决方案，很多都是要改源文件的，感觉根本不用那么麻烦就自己摸索了一下，简便的的设置方法 首先，代理设置全局(global)，全局，全局，重要的事说三遍。因为这基本解决了win上的git问题，但也有例外。 首先，修改git的proxy和修改terminal的proxy不一样，分情况说： Wincm">
+  <meta name="description" content="系统代理设置在git同步的时候，不是连不上github,就是连接超时，贼不习惯。 网上搜了一圈乱七八糟的解决方案，很多都是要改源文件的，感觉根本不用那么麻烦就自己摸索了一下，简便的设置方法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="系统代理设置">
 <meta property="og:url" content="https://gongqihua.github.io/Blog/2024/02/27/proxy-setting/index.html">
 <meta property="og:site_name" content="Qihua&#39;s Blog">
-<meta property="og:description" content="系统代理设置在git同步的时候，不是连不上github,就是连接超时，贼不习惯。 网上搜了一圈乱七八糟的解决方案，很多都是要改源文件的，感觉根本不用那么麻烦就自己摸索了一下，简便的的设置方法 首先，代理设置全局(global)，全局，全局，重要的事说三遍。因为这基本解决了win上的git问题，但也有例外。 首先，修改git的proxy和修改terminal的proxy不一样，分情况说： Wincm">
+<meta property="og:description" content="系统代理设置在git同步的时候，不是连不上github,就是连接超时，贼不习惯。 网上搜了一圈乱七八糟的解决方案，很多都是要改源文件的，感觉根本不用那么麻烦就自己摸索了一下，简便的设置方法">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-02-27T06:00:01.000Z">
-<meta property="article:modified_time" content="2024-02-27T06:19:05.432Z">
+<meta property="article:modified_time" content="2024-03-01T08:17:59.770Z">
 <meta property="article:author" content="Qihua Gong">
 <meta property="article:tag" content="Proxy">
 <meta name="twitter:card" content="summary">
@@ -189,10 +189,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2024-02-27 14:00:01 / Modified: 14:19:05" itemprop="dateCreated datePublished" datetime="2024-02-27T14:00:01+08:00">2024-02-27</time>
+              <time title="Created: 2024-02-27 14:00:01" itemprop="dateCreated datePublished" datetime="2024-02-27T14:00:01+08:00">2024-02-27</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-03-01 16:17:59" itemprop="dateModified" datetime="2024-03-01T16:17:59+08:00">2024-03-01</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -215,7 +221,7 @@
 
       
         <h1 id="系统代理设置"><a href="#系统代理设置" class="headerlink" title="系统代理设置"></a>系统代理设置</h1><p>在git同步的时候，不是连不上github,就是连接超时，贼不习惯。</p>
-<p>网上搜了一圈乱七八糟的解决方案，很多都是要改源文件的，感觉根本不用那么麻烦就自己摸索了一下，简便的的设置方法</p>
+<p>网上搜了一圈乱七八糟的解决方案，很多都是要改源文件的，感觉根本不用那么麻烦就自己摸索了一下，简便的设置方法<span id="more"></span></p>
 <p>首先，代理设置全局(global)，全局，全局，重要的事说三遍。因为这基本解决了win上的git问题，但也有例外。</p>
 <p>首先，修改git的proxy和修改terminal的proxy不一样，分情况说：</p>
 <h2 id="Win"><a href="#Win" class="headerlink" title="Win"></a>Win</h2><h3 id="cmd-powershell修改proxy："><a href="#cmd-powershell修改proxy：" class="headerlink" title="cmd, powershell修改proxy："></a>cmd, powershell修改proxy：</h3><p>cmd：打开输入set http_proxy&#x3D;<a target="_blank" rel="noopener" href="http://127.0.0.1:7890/">http://127.0.0.1:7890</a> 和 set https_proxy&#x3D;<a href="http://127.0.0.1:7890，7890是你的代理端口（proxy">http://127.0.0.1:7890，7890是你的代理端口（proxy</a> port），自己替换。</p>
