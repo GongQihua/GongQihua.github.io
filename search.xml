@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>生成在线URL</title>
-    <url>/Blog/2024/02/27/picture-URL/</url>
-    <content><![CDATA[<h1 id="本地图片生成在线URL"><a href="#本地图片生成在线URL" class="headerlink" title="本地图片生成在线URL"></a>本地图片生成在线URL</h1><p>方法就是用图床，找个在线图床网站，上传图片<span id="more"></span></p>
-<p>可用网址：<a href="https://sm.ms/">https://sm.ms/</a></p>
-<p>注册，上传图片，把网站给的Image URL复制下来就行</p>
-<h1 id="PDF生成-URL"><a href="#PDF生成-URL" class="headerlink" title="PDF生成 URL"></a>PDF生成 URL</h1><p>方法类似，找个pdf url工具，上传，生成</p>
-]]></content>
-      <categories>
-        <category>Web</category>
-      </categories>
-      <tags>
-        <tag>URL</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>系统代理设置</title>
     <url>/Blog/2024/02/27/proxy-setting/</url>
     <content><![CDATA[<h1 id="系统代理设置"><a href="#系统代理设置" class="headerlink" title="系统代理设置"></a>系统代理设置</h1><p>在git同步的时候，不是连不上github,就是连接超时，贼不习惯。</p>
@@ -46,6 +31,21 @@
       </categories>
       <tags>
         <tag>Proxy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>生成在线URL</title>
+    <url>/Blog/2024/02/27/picture-URL/</url>
+    <content><![CDATA[<h1 id="本地图片生成在线URL"><a href="#本地图片生成在线URL" class="headerlink" title="本地图片生成在线URL"></a>本地图片生成在线URL</h1><p>方法就是用图床，找个在线图床网站，上传图片<span id="more"></span></p>
+<p>可用网址：<a href="https://sm.ms/">https://sm.ms/</a></p>
+<p>注册，上传图片，把网站给的Image URL复制下来就行</p>
+<h1 id="PDF生成-URL"><a href="#PDF生成-URL" class="headerlink" title="PDF生成 URL"></a>PDF生成 URL</h1><p>方法类似，找个pdf url工具，上传，生成</p>
+]]></content>
+      <categories>
+        <category>Web</category>
+      </categories>
+      <tags>
+        <tag>URL</tag>
       </tags>
   </entry>
   <entry>
