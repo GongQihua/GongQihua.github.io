@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>生成在线URL</title>
+    <url>/Blog/2024/02/27/picture-URL/</url>
+    <content><![CDATA[<h1 id="本地图片生成在线URL"><a href="#本地图片生成在线URL" class="headerlink" title="本地图片生成在线URL"></a>本地图片生成在线URL</h1><p>方法就是用图床，找个在线图床网站，上传图片<span id="more"></span></p>
+<p>可用网址：<a href="https://sm.ms/">https://sm.ms/</a></p>
+<p>注册，上传图片，把网站给的Image URL复制下来就行</p>
+<h1 id="PDF生成-URL"><a href="#PDF生成-URL" class="headerlink" title="PDF生成 URL"></a>PDF生成 URL</h1><p>方法类似，找个pdf url工具，上传，生成</p>
+]]></content>
+      <categories>
+        <category>Web</category>
+      </categories>
+      <tags>
+        <tag>URL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>系统代理设置</title>
     <url>/Blog/2024/02/27/proxy-setting/</url>
     <content><![CDATA[<h1 id="系统代理设置"><a href="#系统代理设置" class="headerlink" title="系统代理设置"></a>系统代理设置</h1><p>在git同步的时候，不是连不上github,就是连接超时，贼不习惯。</p>
@@ -34,18 +49,44 @@
       </tags>
   </entry>
   <entry>
-    <title>生成在线URL</title>
-    <url>/Blog/2024/02/27/picture-URL/</url>
-    <content><![CDATA[<h1 id="本地图片生成在线URL"><a href="#本地图片生成在线URL" class="headerlink" title="本地图片生成在线URL"></a>本地图片生成在线URL</h1><p>方法就是用图床，找个在线图床网站，上传图片<span id="more"></span></p>
-<p>可用网址：<a href="https://sm.ms/">https://sm.ms/</a></p>
-<p>注册，上传图片，把网站给的Image URL复制下来就行</p>
-<h1 id="PDF生成-URL"><a href="#PDF生成-URL" class="headerlink" title="PDF生成 URL"></a>PDF生成 URL</h1><p>方法类似，找个pdf url工具，上传，生成</p>
+    <title>Unity，启动!</title>
+    <url>/Blog/2024/03/06/unity-begin/</url>
+    <content><![CDATA[<h1 id="Unity，启动！"><a href="#Unity，启动！" class="headerlink" title="Unity，启动！"></a>Unity，启动！</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>万事开头难，中间难，结尾难</p>
+<p>世上无难事，只要肯放弃</p>
+</blockquote>
+<p>本篇记录unity入门和常用资源内容链接</p>
+<p>官方教程内容是最好的内容！<span id="more"></span></p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><ol>
+<li><p>C# 环境配置</p>
+<p>win专属：visual studio一步到位，选C# 桌面应用，unity扩展这两项即可。</p>
+<p>或者：</p>
+<p>下载dotnet（官网或者brew），vscode扩展，rider。</p>
+<p>mac要多下一个mono框架</p>
+</li>
+<li><p>unity配置</p>
+<p>官网下载unity hub，hub安装选择unity版本</p>
+<p>建议不要默认，进去自选，最小安装，以后可以加配（加了不能删，什么鬼啊！）</p>
+<p>设置unity使用的编辑器，默认win和mac都是vs（mac的vs都快GG了）</p>
+<p>编辑器的unity好用插件，按需求来</p>
+</li>
+</ol>
+<h2 id="官方资源"><a href="#官方资源" class="headerlink" title="官方资源"></a>官方资源</h2><p>建议看英语，并不是中文不好看，而是中文文档是机翻！有些甚至不翻！（都有GPT了，有没有搞错啊）</p>
+<p>官网：<a href="https://unity.com/">https://unity.com</a></p>
+<p>文档：<a href="https://docs.unity.com/">https://docs.unity.com</a></p>
+<p>Unity Learn：<a href="https://learn.unity.com/">https://learn.unity.com</a></p>
+<p>Assert Store：<a href="https://assetstore.unity.com/">https://assetstore.unity.com</a></p>
+<blockquote>
+<p>先在assert store里import，然后hub创建空项目，package manager导入</p>
+</blockquote>
+<h2 id="软件界面"><a href="#软件界面" class="headerlink" title="软件界面"></a>软件界面</h2><p>软件界面各个按键是操作的基本，看官方文档吧</p>
+<p>顺便b站和github都有教程，边做边熟悉，关键是一些画面快速操作的快捷键</p>
 ]]></content>
       <categories>
-        <category>Web</category>
+        <category>Unity</category>
       </categories>
       <tags>
-        <tag>URL</tag>
+        <tag>U3D</tag>
       </tags>
   </entry>
   <entry>
@@ -137,47 +178,6 @@
       </categories>
       <tags>
         <tag>Blog</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Unity，启动!</title>
-    <url>/Blog/2024/03/06/unity-begin/</url>
-    <content><![CDATA[<h1 id="Unity，启动！"><a href="#Unity，启动！" class="headerlink" title="Unity，启动！"></a>Unity，启动！</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
-<p>万事开头难，中间难，结尾难</p>
-<p>世上无难事，只要肯放弃</p>
-</blockquote>
-<p>本篇记录unity入门和常用资源内容链接</p>
-<p>官方教程内容是最好的内容！<span id="more"></span></p>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><ol>
-<li><p>C# 环境配置</p>
-<p>win专属：visual studio一步到位，选C# 桌面应用，unity扩展这两项即可。</p>
-<p>或者：</p>
-<p>下载dotnet（官网或者brew），vscode扩展，rider。</p>
-<p>mac要多下一个mono框架</p>
-</li>
-<li><p>unity配置</p>
-<p>官网下载unity hub，hub安装选择unity版本</p>
-<p>建议不要默认，进去自选，最小安装，以后可以加配（加了不能删，什么鬼啊！）</p>
-<p>设置unity使用的编辑器，默认win和mac都是vs（mac的vs都快GG了）</p>
-<p>编辑器的unity好用插件，按需求来</p>
-</li>
-</ol>
-<h2 id="官方资源"><a href="#官方资源" class="headerlink" title="官方资源"></a>官方资源</h2><p>建议看英语，并不是中文不好看，而是中文文档是机翻！有些甚至不翻！（都有GPT了，有没有搞错啊）</p>
-<p>官网：<a href="https://unity.com/">https://unity.com</a></p>
-<p>文档：<a href="https://docs.unity.com/">https://docs.unity.com</a></p>
-<p>Unity Learn：<a href="https://learn.unity.com/">https://learn.unity.com</a></p>
-<p>Assert Store：<a href="https://assetstore.unity.com/">https://assetstore.unity.com</a></p>
-<blockquote>
-<p>先在assert store里import，然后hub创建空项目，package manager导入</p>
-</blockquote>
-<h2 id="软件界面"><a href="#软件界面" class="headerlink" title="软件界面"></a>软件界面</h2><p>软件界面各个按键是操作的基本，看官方文档吧</p>
-<p>顺便b站和github都有教程，边做边熟悉，关键是一些画面快速操作的快捷键</p>
-]]></content>
-      <categories>
-        <category>Unity</category>
-      </categories>
-      <tags>
-        <tag>U3D</tag>
       </tags>
   </entry>
 </search>
