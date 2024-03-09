@@ -180,4 +180,21 @@
         <tag>Blog</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Unity Playground</title>
+    <url>/Blog/2024/03/09/unity-Playground/</url>
+    <content><![CDATA[<h1 id="Unity-Playground-练手第一个游戏"><a href="#Unity-Playground-练手第一个游戏" class="headerlink" title="Unity Playground 练手第一个游戏"></a>Unity Playground 练手第一个游戏</h1><p>Unity官方网址： <a href="https://learn.unity.com/project/unity-playground">https://learn.unity.com/project/unity-playground</a></p>
+<p>主要流程还是要看官方教程，作为熟悉unity第一个上手项目，官方手把手教程，按步骤一步步来</p>
+<p>资源载入： <a href="https://assetstore.unity.com/packages/templates/tutorials/unity-learn-playground-urp-109917">https://assetstore.unity.com/packages/templates/tutorials/unity-learn-playground-urp-109917</a></p>
+<p>按上一篇教程，创建2D空模版，package manager import</p>
+<p>这个教程里主要是拖拖控件，脚本都已经写好了，主要是熟悉unity</p>
+<p>里面还有很多初级的游戏模版，可以直接运行，部件脚本可以看一看。</p>
+]]></content>
+      <categories>
+        <category>Unity</category>
+      </categories>
+      <tags>
+        <tag>U3D</tag>
+      </tags>
+  </entry>
 </search>
