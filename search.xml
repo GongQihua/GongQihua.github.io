@@ -3,7 +3,7 @@
   <entry>
     <title>系统代理设置</title>
     <url>/Blog/2024/02/27/proxy-setting/</url>
-    <content><![CDATA[<h1 id="系统代理设置"><a href="#系统代理设置" class="headerlink" title="系统代理设置"></a>系统代理设置</h1><p>在git同步的时候，不是连不上github,就是连接超时，贼不习惯。</p>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在git同步的时候，不是连不上github,就是连接超时，贼不习惯。</p>
 <p>网上搜了一圈乱七八糟的解决方案，很多都是要改源文件的，感觉根本不用那么麻烦就自己摸索了一下，简便的设置方法<span id="more"></span></p>
 <p>首先，代理设置全局(global)，全局，全局，重要的事说三遍。因为这基本解决了win上的git问题，但也有例外。</p>
 <p>首先，修改git的proxy和修改terminal的proxy不一样，分情况说：</p>
@@ -183,12 +183,31 @@
   <entry>
     <title>Unity Playground</title>
     <url>/Blog/2024/03/09/unity-Playground/</url>
-    <content><![CDATA[<h1 id="Unity-Playground-练手第一个游戏"><a href="#Unity-Playground-练手第一个游戏" class="headerlink" title="Unity Playground 练手第一个游戏"></a>Unity Playground 练手第一个游戏</h1><p>Unity官方网址： <a href="https://learn.unity.com/project/unity-playground">https://learn.unity.com/project/unity-playground</a></p>
+    <content><![CDATA[<h1 id="Unity-练手第一个游戏"><a href="#Unity-练手第一个游戏" class="headerlink" title="Unity 练手第一个游戏"></a>Unity 练手第一个游戏</h1><p>Unity2D的初识项目，新手入门第一次项目体验。<span id="more"></span></p>
+<p>Unity官方网址： <a href="https://learn.unity.com/project/unity-playground">https://learn.unity.com/project/unity-playground</a></p>
 <p>主要流程还是要看官方教程，作为熟悉unity第一个上手项目，官方手把手教程，按步骤一步步来</p>
 <p>资源载入： <a href="https://assetstore.unity.com/packages/templates/tutorials/unity-learn-playground-urp-109917">https://assetstore.unity.com/packages/templates/tutorials/unity-learn-playground-urp-109917</a></p>
 <p>按上一篇教程，创建2D空模版，package manager import</p>
-<p>这个教程里主要是拖拖控件，脚本都已经写好了，主要是熟悉unity</p>
-<p>里面还有很多初级的游戏模版，可以直接运行，部件脚本可以看一看。</p>
+<p>这个教程里主要是2D项目的入门介绍，脚本都已经写好了，主要是熟悉控件和unity2D的使用</p>
+<p>里面还有很多初级的游戏模版，可以直接运行，控件脚本可以打开看一看。</p>
+<p>Playground的项目里还有好几个example，可以都运行一下，启发启发灵感。</p>
+]]></content>
+      <categories>
+        <category>Unity</category>
+      </categories>
+      <tags>
+        <tag>U3D</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CreatorKit-FPS</title>
+    <url>/Blog/2024/03/11/CreatorKit-FPS/</url>
+    <content><![CDATA[<h1 id="Unity3D项目初识"><a href="#Unity3D项目初识" class="headerlink" title="Unity3D项目初识"></a>Unity3D项目初识</h1><p>与Playground类似，本项目作为Unity 3D项目的入门，是官方教程的一部分<span id="more"></span></p>
+<p>官方教程链接：<a href="https://learn.unity.com/project/creator-kit-fps">https://learn.unity.com/project/creator-kit-fps</a></p>
+<p>项目载入地址：<a href="https://assetstore.unity.com/packages/templates/tutorials/unity-learn-creator-kit-fps-urp-149310">https://assetstore.unity.com/packages/templates/tutorials/unity-learn-creator-kit-fps-urp-149310</a></p>
+<p>创立一个3D空模版，直接assert store import就能开始了</p>
+<p>是一个初级的3D项目，让我们熟悉unity3D编辑器的应用，和控件的使用</p>
+<p>跟随教程一步步往下就行，主要体验过程</p>
 ]]></content>
       <categories>
         <category>Unity</category>
