@@ -216,4 +216,41 @@
         <tag>U3D</tag>
       </tags>
   </entry>
+  <entry>
+    <title>2D Game Kit</title>
+    <url>/Blog/2024/03/18/2D_Game_Kit/</url>
+    <content><![CDATA[<h2 id="2D-Game-Kit"><a href="#2D-Game-Kit" class="headerlink" title="2D Game Kit"></a>2D Game Kit</h2><p>2D is a collection of mechanics, tools, systems and assets to hook up gameplay without writing any code. To show how these elements can be used we’ve also created a game example using these systems.<span id="more"></span></p>
+<p>官方链接：<a href="https://learn.unity.com/project/2d-game-kit">https://learn.unity.com/project/2d-game-kit</a></p>
+<p>资源地址：<a href="https://assetstore.unity.com/packages/templates/tutorials/2d-game-kit-107098">https://assetstore.unity.com/packages/templates/tutorials/2d-game-kit-107098</a></p>
+<p>2D 横版跳跃的新手包，主要是教你全局设计2D内容，脚本都是配置好的，往上拖资源和控件就行。这里多设计到一个tile map编辑，但是tilemap里的组件是帮你写好的，主要是体验</p>
+<p>主要有两个进阶内容，但都是写好组件，跟着教程走就行</p>
+<p>触发式组件（机关开门，甚至物品与怪物的交互）</p>
+<p>场景传送（涉及同场景传送和不同场景传送到方法）</p>
+<p>内置的脚本可以看一下</p>
+]]></content>
+      <categories>
+        <category>Unity</category>
+      </categories>
+      <tags>
+        <tag>U3D</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CreatorKit Beginner Code</title>
+    <url>/Blog/2024/03/12/CreatorKit_BeginnerCode/</url>
+    <content><![CDATA[<h1 id="Unity脚本设计入门"><a href="#Unity脚本设计入门" class="headerlink" title="Unity脚本设计入门"></a>Unity脚本设计入门</h1><p>本篇是unity游戏中，C#脚本编辑的初体验<span id="more"></span></p>
+<p>依旧是跟随官方教程</p>
+<p>链接：<a href="https://learn.unity.com/project/creator-kit-beginner-code">https://learn.unity.com/project/creator-kit-beginner-code</a></p>
+<p>导入：<a href="https://assetstore.unity.com/packages/templates/tutorials/creator-kit-beginner-code-urp-151986">https://assetstore.unity.com/packages/templates/tutorials/creator-kit-beginner-code-urp-151986</a></p>
+<p>记得创建3D URP模版，不然运行有bug</p>
+<p>基本就是C#的标准结构，space，class，function，然后套官方函数，比如读属性，或者位置角度之类的，很简单。</p>
+<p>游戏挺有意思的，arpg，可以自己试着加一点获胜条件啥的玩一玩</p>
+]]></content>
+      <categories>
+        <category>Unity</category>
+      </categories>
+      <tags>
+        <tag>U3D</tag>
+      </tags>
+  </entry>
 </search>
