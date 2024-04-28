@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/Blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/Blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/Blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/Blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+<link rel="stylesheet" href="/Blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"gongqihua.github.io","root":"/Blog/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Ruby’s Adventure: 2D Beginner前言官方的一个非常好的2D教程，涉及： 使用 2D 资源 2D RPG 游戏制作流程 创建并控制角色（使用脚本代码） 使用瓦片地图创建世界 设置动态精灵，角色动画 一些简单特效（粒子效果），UI系统和2D声音系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ruby&#39;s Adventure 2D Beginner">
+<meta property="og:url" content="https://gongqihua.github.io/Blog/2024/04/09/Ruby_Adventure_2D_Beginner/index.html">
+<meta property="og:site_name" content="Qihua&#39;s Blog">
+<meta property="og:description" content="Ruby’s Adventure: 2D Beginner前言官方的一个非常好的2D教程，涉及： 使用 2D 资源 2D RPG 游戏制作流程 创建并控制角色（使用脚本代码） 使用瓦片地图创建世界 设置动态精灵，角色动画 一些简单特效（粒子效果），UI系统和2D声音系统">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-04-09T05:23:00.000Z">
+<meta property="article:modified_time" content="2024-04-28T05:28:12.906Z">
+<meta property="article:author" content="Qihua Gong">
+<meta property="article:tag" content="U3D">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://gongqihua.github.io/Blog/2024/04/09/Ruby_Adventure_2D_Beginner/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Ruby's Adventure 2D Beginner | Qihua's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/Blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Qihua's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Personal Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/Blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/Blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/Blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/Blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/Blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-resume">
+
+    <a href="https://gongqihua.github.io/" rel="section"><i class="fa fa-file fa-fw"></i>Resume</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gongqihua.github.io/Blog/2024/04/09/Ruby_Adventure_2D_Beginner/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s2.loli.net/2024/02/27/t6ipmhvbDjX7zn5.jpg">
+      <meta itemprop="name" content="Qihua Gong">
+      <meta itemprop="description" content="Qihua Personal Blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qihua's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Ruby's Adventure 2D Beginner
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-04-09 13:23:00" itemprop="dateCreated datePublished" datetime="2024-04-09T13:23:00+08:00">2024-04-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-04-28 13:28:12" itemprop="dateModified" datetime="2024-04-28T13:28:12+08:00">2024-04-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/Blog/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Ruby’s-Adventure-2D-Beginner"><a href="#Ruby’s-Adventure-2D-Beginner" class="headerlink" title="Ruby’s Adventure: 2D Beginner"></a>Ruby’s Adventure: 2D Beginner</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>官方的一个非常好的2D教程，涉及：</p>
+<p>使用 2D 资源</p>
+<p>2D RPG 游戏制作流程</p>
+<p>创建并控制角色（使用脚本代码）</p>
+<p>使用瓦片地图创建世界</p>
+<p>设置动态精灵，角色动画</p>
+<p>一些简单特效（粒子效果），UI系统和2D声音系统<span id="more"></span></p>
+<p>官方地址：<a target="_blank" rel="noopener" href="https://learn.unity.com/project/ruby-s-2d-rpg?uv=2020.3">https://learn.unity.com/project/ruby-s-2d-rpg?uv=2020.3</a></p>
+<p>Assert store：<a target="_blank" rel="noopener" href="https://assetstore.unity.com/packages/templates/tutorials/unity-learn-2d-beginner-complete-project-urp-140253">https://assetstore.unity.com/packages/templates/tutorials/unity-learn-2d-beginner-complete-project-urp-140253</a></p>
+<h2 id="创建并控制角色"><a href="#创建并控制角色" class="headerlink" title="创建并控制角色"></a>创建并控制角色</h2><p>png图像跟着教程往unity拖，unity会自动转格式</p>
+<h3 id="移动角色"><a href="#移动角色" class="headerlink" title="移动角色"></a>移动角色</h3><p>Unity 中，通过游戏对象的 Transform 组件，可以获取该对象在场景中的位置 Position，并通过更改 Transform 组件 Position 的值，可以更改其位置。</p>
+<h3 id="移动脚本"><a href="#移动脚本" class="headerlink" title="移动脚本"></a>移动脚本</h3><p>在 Update 方法中，更改 Ruby 角色位置</p>
+<p>Unity 在每帧执行 Update 内的代码，为了形成动感，游戏（就像电影一样）是高速显示的静止图像。在游戏中通常会在一秒内显示 30 或 60 张图像。其中的一张图像称为一帧。</p>
+<p>在此 Update 函数中，你可以编写想要在游戏中连续发生的任何操作（例如，读取玩家的输入、移动游戏对象或计算经过的时间）。</p>
+<h4 id="Vector2-二维向量"><a href="#Vector2-二维向量" class="headerlink" title="Vector2 二维向量"></a>Vector2 二维向量</h4><p>在脚本中，Vector 向量&#x2F;矢量指的是带方向的线段</p>
+<p>在 Unity 中，Transform 值使用 x 表示水平位置，使用 y 表示垂直位置，使用 z 表示深度。这 3 个数值组成一个坐标。由于此游戏是 2D 游戏，你无需存储 z 轴位置，因此你可以在此处使用 Vector2 来仅存储 x 和 y 位置。</p>
+<p>Transform 中 position 的类型，也是 Vector2</p>
+<h3 id="控制角色"><a href="#控制角色" class="headerlink" title="控制角色"></a>控制角色</h3><p>控制方式：电脑或主机的输入设备</p>
+<p>在 Unity 项目设置中，可以通过 Input Manager 进行默认的游戏输入控制设置 Edit &gt; Project Settings &gt; Input</p>
+<p>使用Input类来读取传统游戏输入中设置的轴&#x2F;鼠标&#x2F;按键，以及访问移动设备上的多点触控&#x2F;加速度计数据。若要使用输入来进行任何类型的移动行为，请使用 Input.GetAxis。 它为您提供平滑且可配置的输入 - 可以映射到键盘、游戏杆或鼠标。 请将 Input.GetButton 仅用于事件等操作。不要将它用于移动操作。Input.GetAxis 将使脚本代码更简洁。</p>
+<h3 id="时间和帧率"><a href="#时间和帧率" class="headerlink" title="时间和帧率"></a>时间和帧率</h3><p>当前的代码中，帧数越高，同一时间内，执行 Update 的次数越多，角色移动速度越快。</p>
+<p>如果游戏以每秒 60 帧的速度运行，那么 Ruby 将移动 0.1 _ 60，因此每秒移动 6 个单位。但是，如果游戏以每秒 10 帧的速度运行，就像刚刚让游戏运行的那样，那么 Ruby 仅移动 0.1 _ 10，因此每秒移动 1 个单位！</p>
+<p>如果一个玩家的计算机非常陈旧，只能以每秒 30 帧的速度运行游戏，而另一个玩家的计算机能以每秒 120 帧的速度运行游戏，那么这两个玩家的主角的移动速度会有很大差异。这样就会使游戏的难易程度提高或降低，具体取决于运行游戏的计算机。</p>
+<p>而帧数是由硬件水平影响的（越好越高），不同电脑中，会导致游戏效果完全不同</p>
+<p>可以锁帧，但硬件能达到的情况下（显卡、显示器），锁帧会降低画面效果。</p>
+<p>要解决此问题，你需要以单位&#x2F;秒来表示 Ruby 的移动速度，而不是采用单位&#x2F;帧（目前采用此设置）。</p>
+<p>为此，你需要通过将移动速度乘以 Unity 渲染一帧所需的时间来更改移动速度。如果游戏以每秒 10 帧的速度运行，则每帧耗时 0.1 秒。如果游戏以每秒 60 帧的速度运行，则每帧耗时 0.017 秒。如果将移动速度乘以该时间值，则移动速度将以秒表示。</p>
+<p>Time.deltaTime 每帧的时间间隔，float 类型</p>
+<p>一般将这个值，用在 Update 方法中，乘以移动的距离（或角度），用来获取恒定（不同硬件水平的电脑间）的速度</p>
+<h2 id="Tilemap-瓦片地图系统"><a href="#Tilemap-瓦片地图系统" class="headerlink" title="Tilemap 瓦片地图系统"></a>Tilemap 瓦片地图系统</h2><p>Tilemap 是 2D 游戏中，用来构建世界的工具，这个工具使用技术的好坏，直接影响到你制作 2D 游戏时的工作量</p>
+<p>瓦片地图组件，是一个存储和操作 Tile 资源的系统，用来创建 2D 关卡。</p>
+<p>该系统还可以将所需信息通过所包含的 Tiles 传输到其他相关组件，例如 Tilemap Renderer 和 Tilemap Collider 2D。</p>
+<p>创建瓦片地图时，Grid 组件自动作为瓦片地图的父级，并在将瓦片布置到瓦片地图上时作为参照</p>
+<h3 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h3><p>素材相关：</p>
+<ul>
+<li>Sprite(精灵)：纹理的容器。大型纹理图集可以转换为精灵图集(Sprite Sheet)</li>
+<li>Tile(瓦片)：包含一个精灵，以及二个属性，颜色和碰撞体类型。使用瓦片就像在画布上画画一样，画画时可以设置一些颜色和属性</li>
+</ul>
+<p>工具相关：</p>
+<ul>
+<li>Tile Palette(瓦片调色板)：当你在画布(Canvas)上画画时，会需要一个位置来保存绘画的结果。类似地，调色板(Palette)的功能就是保存瓦片，将它们绘制到网格上</li>
+<li>Brush(笔刷)：用于将画好的东西绘制到画布上。使用 Tilemap 时，可以在多个笔刷中任意选择，绘制出线条、方块等各种形状</li>
+</ul>
+<p>组件相关：</p>
+<ul>
+<li>Tilemap（瓦片地图）：类似 Photoshop 中的图层，我们可以在 Tilemap 上画上 Tile</li>
+<li>Grid(网格)：用于控制网格属性的组件。Tilemap 是 Grid 的子对象。Grid 类似于 UI Canvas(UI 画布)。</li>
+<li>Tilemap Renderer(瓦片地图渲染器)：是 Tilemap 游戏对象的一部分,用于控制 Tile 在 Tilemap 上的渲染，控制诸如排序、材质和遮罩等。</li>
+</ul>
+<p>分类</p>
+<ul>
+<li>Rectangler 矩形瓦片地图</li>
+<li>Hexagonal 六边形瓦片地图：除常规瓦片地图外，Unity 还提供 Hexagonal Point Top Tilemap 和 Hexagonal Flat Top Tilemap 瓦片地图。六角形瓦片通常用于战略类桌面游戏，因为它们的中心与边上的任何点之间具有一致的距离，并且相邻的瓦片总是共享边。因此，这些瓦片非常适合构建几乎任何类型的大型游戏区域，并让玩家做出关于移动和定位的战术决策。</li>
+</ul>
+<h3 id="瓦片和使用流程"><a href="#瓦片和使用流程" class="headerlink" title="瓦片和使用流程"></a>瓦片和使用流程</h3><p><strong>瓦片</strong>是排列在<strong>瓦片地图</strong>上的<strong>资源</strong>，用于构建 2D 环境。每个瓦片引用一个选定的<strong>精灵</strong>，然后在瓦片地图网格上的瓦片位置处渲染该精灵。</p>
+<ol>
+<li>预处理 sprite 资源：将图片资源拖拽到 project 中，生成 sprite；然后一般需要进行切割 slice ，将其配置成需要的各个 tile;</li>
+<li>创建要在其上绘制瓦片的瓦片地图。此过程中还会自动创建 Grid 游戏对象作为瓦片地图的父级。</li>
+<li>直接创建瓦片资源，或者通过将用作瓦片素材的精灵带入 Tile Palette 窗口自动生成瓦片。</li>
+<li>创建一个包含<strong>瓦片资源</strong>的 Tile Palette，并使用各种笔刷来绘制到<strong>瓦片地图</strong>上。</li>
+<li>可以将 Tilemap Collider 2D 组件连接到瓦片地图以便使瓦片地图与 Physics2D 交互。</li>
+</ol>
+<p>一般 Tilemap 创建三个，分别为:</p>
+<ul>
+<li>background(地图背景)</li>
+<li>bound(边界)</li>
+<li>foreground(前景，主要是地形)</li>
+</ul>
+<h3 id="场景排序"><a href="#场景排序" class="headerlink" title="场景排序"></a>场景排序</h3><p>透视图指的是有深度、距离感的图，一般要三维中的深度轴来表现场景的深度，而二维游戏中没有这个深度，只能通过前后来仿造深度效果，称为“伪透视图”</p>
+<p>先前通过调整瓦片的 Order in Layer 属性来解决了瓦片地图的排序问题，但并非总是希望一个游戏对象在另一个游戏对象之上，比如，在同一个瓦片地图中，玩家角色在一个物体之前（比如一棵树）时，应该是玩家遮挡树，而玩家移动到树后时，应该是树遮挡玩家，这就需要“伪造”透视图。</p>
+<p>在 2D 游戏中，场景里的 <strong>“前后”</strong> 是由 Y 轴决定的，需要让 Unity 根据游戏对象的 y 坐标来绘制游戏对象</p>
+<p>Y 轴 y 坐标值越小，越靠前，应该遮挡 y 坐标值较大的游戏对象，也就是 y 坐标较小的游戏对象后绘制，就会位于上层</p>
+<p>每个 Sprite 都有一个轴心（中心点），Unity 根据 pivot 对 sprite 进行定位，这个 pivot 可以在 sprite editor 中调整，可以将其设置到 sprite 上任意位置</p>
+<p>在 2D Rpg 游戏场景中的游戏对象，如果想要实现较为真实的 “伪透视” 效果，最好将游戏对象的 sprite 中 pivot 都设置到素材的最下方正中。</p>
+<h2 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h2><p>动画剪辑（Animation clip）是动画的基本组成部分，包含某些对象应如何随时间改变其位置、旋转或其他属性的相关信息。</p>
+<p>动画剪辑一般和不同的状态相挂接，比如“静止状态”挂接站立不移动时的动画、“奔跑状态”挂接跑动的动画剪辑….</p>
+<p>Animator Controller 用来控制不同状态下动画的播放，以及状态间的转换</p>
+<p>所有这些部分（动画剪辑、Animator Controller 和 Avatar）都通过 Animator 组件一起附加到某个游戏对象上。</p>
+<p>Animator 分为两个部分，左侧是 Layers 和 Parameters，右侧是动画状态机 (Animation State Machine)：</p>
+<ul>
+<li>第 1 部分：Layers 和 Parameters<br>Layers 可用于 3D 动画，因为你可以将动画用于角色的不同部分。<br>Parameters 由我们的脚本用来向 Controller 提供信息。</li>
+<li>第 2 部分：动画状态机<br>动画状态机以图形方式显示动画的所有状态以及如何从一段动画过渡到另一段动画。</li>
+</ul>
+<p>混合树 (Blend Tree)，这种混合树允许你根据参数来混合多段动画。</p>
+<p>Animator 是动画组件，可以理解为一个用来处理动画的功能型容器，所有和动画相关的部分（动画剪辑、Animator Controller 和 Avatar）都通过 Animator 组件一起附加到某个游戏对象上。</p>
+<h2 id="UI界面"><a href="#UI界面" class="headerlink" title="UI界面"></a>UI界面</h2><p>Unity 用户界面 (Unity UI) 软件包（也称为 uGUI）是一个较旧的、基于游戏对象的 UI 系统，您可以使用它为游戏和应用程序开发运行时 UI。在 Unity UI 中，即可使用组件和 Game 视图来排列和定位用户界面并设置其样式。它支持高级渲染和文本功能。</p>
+<p>使用步骤</p>
+<ol>
+<li>创建 画布 Canves</li>
+<li>在 画布 Canves 中添加 UI 组件（文本、文本框、按钮等等）</li>
+<li>设置好布局、动画，以及摄像机、特效等</li>
+<li>需要的话，再添加交互事件</li>
+</ol>
+<h3 id="UGUI-基础"><a href="#UGUI-基础" class="headerlink" title="UGUI 基础"></a>UGUI 基础</h3><p><strong>Rect Transform 矩形变换</strong></p>
+<p>矩形变换像常规变换一样具有位置，旋转和比例，但它还具有宽度和高度表示矩形的尺寸。</p>
+<p><strong>Pivot 枢轴（轴心）</strong></p>
+<p>旋转、大小和缩放修改都是围绕轴心进行的，因此轴心的位置会影响旋转、大小调整或缩放的结果。</p>
+<p><strong>Anchors 锚点</strong></p>
+<p>锚点在场景视图中显示为四个小三角形手柄（四叶花）。每个叶子位置对应矩形的四个顶点。当描点随父对象变换时，矩形的顶点与对应的锚点相对位置必须保持不变。</p>
+<p>例如，子项可以锚定到父项的中心，或锚定到一个角。</p>
+<p>通过锚定还可以让子项随父项的宽度或高度一起拉伸。矩形的每个角与其对应的锚点都有一个固定的偏移，即矩形的左上角与左上角锚点有一个固定的偏移，以此类推。因此，矩形的不同角可以锚定到父矩形中的不同点。</p>
+<p><strong>遮罩</strong></p>
+<p>两个图像，一个是原图像，一个是遮罩图像，显示的是原图像，遮罩图像控制原图像的显示范围，只显示背遮罩区域的原图像。</p>
+<p>所以可以通过更改遮罩图像的大小，来不失真地显示原图像的部分区域</p>
+<p><strong>静态成员</strong></p>
+<p>可以使用 static 关键字把类成员定义为静态的。当我们声明一个类成员为静态时，意味着无论有多少个类的对象被创建，只会有一个该静态成员，并且被所有类对象所共享。</p>
+<h2 id="音频"><a href="#音频" class="headerlink" title="音频"></a>音频</h2><p>为了模拟位置的影响，Unity 要求声音源来自附加到对象的 <strong>音频源</strong> Audio Source。然后，发出的声音由附加到另一个对象（通常是主摄像机）上的 <strong>音频监听器</strong> Audio Listener 拾取。Unity 然后可以模拟音频源与监听器物体之间的距离和位置的影响，并相应地播放给用户。此外还使用源对象和监听器对象的相对速度来模拟多普勒效应以增加真实感。</p>
+<p>Unity 混音器 (Audio Mixer) 允许您混合各种音频源，对音频源应用效果，以及执行母带制作 (mastering)。</p>
+<p>Unity 可以导入大多数标准音频文件格式，音频文件在 Unity 中 <strong>音频剪辑</strong> Audio Clip</p>
+<p>AIFF、WAV、MP3 和 Ogg 等格式的音频文件，只需要将文件拖入 Project 面板即可。</p>
+<h3 id="音频剪辑-Audio-Clip"><a href="#音频剪辑-Audio-Clip" class="headerlink" title="音频剪辑 Audio Clip"></a>音频剪辑 Audio Clip</h3><p>音频剪辑 Audio Clip 就是在 Unity 中实际发声的音频文件</p>
+<p>Unity 支持单声道、立体声和多声道音频资源（最多八声道）</p>
+<p>Unity 可以导入的音频文件格式包括：.aif、.wav、.mp3 和 .ogg。Unity 还能够导入 .xm、.mod、.it 和 .s3m 格式的音轨模块。</p>
+<h3 id="音频源-Audio-Source"><a href="#音频源-Audio-Source" class="headerlink" title="音频源 Audio Source"></a>音频源 Audio Source</h3><p>音频源 (Audio Source) 在场景中播放 音频剪辑 Audio Clip。</p>
+<p>如果不为音频源指定<strong>音频剪辑</strong>，音频源不起作用。</p>
+<p>音频源就像一个控制器，用于启动和停止该剪辑音源的播放，以及修改其他音频属性</p>
+<p>核心属性：</p>
+<ul>
+<li><p>Audio Clip： 将要播放的声音剪辑文件。</p>
+</li>
+<li><p>Output： 默认情况下，剪辑将直接输出到场景中的音频监听器 (Audio Listener)</p>
+</li>
+<li><p>Mute： 如果启用此选项，则为静音</p>
+</li>
+<li><p>Play On Awake： 如果启用此选项，声音将在场景启动时开始播放。如果禁用此选项，需要通过脚本使用 Play() 命令启用播放</p>
+</li>
+<li><p>Loop： 启用此选项可在<strong>音频剪辑</strong>结束后循环播放</p>
+</li>
+<li><p>Priority： 从场景中存在的所有音频源中确定此音频源的优先级。（Priority 值为 0 表示优先级最高。值为 256， 表示优先级最低。默认值为 128）</p>
+</li>
+<li><p>Volume： 设置声音的大小，但请注意，除了这个属性外，玩家听到的声音，与离<strong>音频监听器</strong>的距离成正比，以米为世界单位</p>
+</li>
+<li><p>Spatial Blend： 设置 3D 引擎对音频源的影响程度。</p>
+</li>
+</ul>
+<h3 id="音频监听器-Audio-Listener"><a href="#音频监听器-Audio-Listener" class="headerlink" title="音频监听器 Audio Listener"></a>音频监听器 Audio Listener</h3><p>音频监听器 (Audio Listener) 充当类似于麦克风的设备。它接收来自场景中任何给定音频源的输入，并通过计算机扬声器播放声音。对于大多数应用程序，最有意义的是将监听器附加到主摄像机。</p>
+<p>音频监听器与音频源配合使用，可让您为游戏营造听觉体验。当音频监听器连接到场景中的<strong>游戏对象</strong>时，任何足够接近监听器的源都将被拾取并输出到计算机的扬声器。每个场景只能有 1 个音频监听器才能正常工作。</p>
+<p>通常，应该将音频监听器连接到主摄像机或代表玩家的游戏对象。</p>
+<p>注意：</p>
+<ul>
+<li>每个场景只能有一个音频监听器</li>
+</ul>
+<h3 id="Unity-中播放声音的基本使用步骤"><a href="#Unity-中播放声音的基本使用步骤" class="headerlink" title="Unity 中播放声音的基本使用步骤"></a>Unity 中播放声音的基本使用步骤</h3><p><strong>通过 Unity 面板可视化控制</strong></p>
+<ol>
+<li>为当前场景配置 Audio Listener，可以连接到主摄像机，或玩家游戏对象（第一人称或第三人称追尾游戏）；</li>
+<li>将音频文件素材拖拽入 project 窗口，生成 音频剪辑 Audio Clip</li>
+<li>创建空游戏对象，并为其添加 音频源 Audio Source 组件，用来配置管理 Audio Clip</li>
+</ol>
+<p><strong>使用代码</strong></p>
+<ul>
+<li>方式一（一对一）：为游戏中每个要播放声音的游戏对象都配置音频源组件，并绑定该音频源的音频剪辑，通过代码来控制该声音源组件来播放其中的音频剪辑；</li>
+<li>方式二（一对多）：通过一个音频源，用代码控制播放多个不同的音频剪辑，使用 AudioSource 类对象的一个名为 PlayOneShot 的函数来实现</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/Blog/tags/U3D/" rel="tag"># U3D</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Blog/2024/03/18/2D_Game_Kit/" rel="prev" title="2D Game Kit">
+      <i class="fa fa-chevron-left"></i> 2D Game Kit
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Ruby%E2%80%99s-Adventure-2D-Beginner"><span class="nav-number">1.</span> <span class="nav-text">Ruby’s Adventure: 2D Beginner</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%B9%B6%E6%8E%A7%E5%88%B6%E8%A7%92%E8%89%B2"><span class="nav-number">1.2.</span> <span class="nav-text">创建并控制角色</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E8%A7%92%E8%89%B2"><span class="nav-number">1.2.1.</span> <span class="nav-text">移动角色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E8%84%9A%E6%9C%AC"><span class="nav-number">1.2.2.</span> <span class="nav-text">移动脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Vector2-%E4%BA%8C%E7%BB%B4%E5%90%91%E9%87%8F"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">Vector2 二维向量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E8%A7%92%E8%89%B2"><span class="nav-number">1.2.3.</span> <span class="nav-text">控制角色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E5%92%8C%E5%B8%A7%E7%8E%87"><span class="nav-number">1.2.4.</span> <span class="nav-text">时间和帧率</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tilemap-%E7%93%A6%E7%89%87%E5%9C%B0%E5%9B%BE%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.3.</span> <span class="nav-text">Tilemap 瓦片地图系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6"><span class="nav-number">1.3.1.</span> <span class="nav-text">组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%93%A6%E7%89%87%E5%92%8C%E4%BD%BF%E7%94%A8%E6%B5%81%E7%A8%8B"><span class="nav-number">1.3.2.</span> <span class="nav-text">瓦片和使用流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF%E6%8E%92%E5%BA%8F"><span class="nav-number">1.3.3.</span> <span class="nav-text">场景排序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E7%94%BB"><span class="nav-number">1.4.</span> <span class="nav-text">动画</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UI%E7%95%8C%E9%9D%A2"><span class="nav-number">1.5.</span> <span class="nav-text">UI界面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UGUI-%E5%9F%BA%E7%A1%80"><span class="nav-number">1.5.1.</span> <span class="nav-text">UGUI 基础</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9F%B3%E9%A2%91"><span class="nav-number">1.6.</span> <span class="nav-text">音频</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9F%B3%E9%A2%91%E5%89%AA%E8%BE%91-Audio-Clip"><span class="nav-number">1.6.1.</span> <span class="nav-text">音频剪辑 Audio Clip</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9F%B3%E9%A2%91%E6%BA%90-Audio-Source"><span class="nav-number">1.6.2.</span> <span class="nav-text">音频源 Audio Source</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9F%B3%E9%A2%91%E7%9B%91%E5%90%AC%E5%99%A8-Audio-Listener"><span class="nav-number">1.6.3.</span> <span class="nav-text">音频监听器 Audio Listener</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Unity-%E4%B8%AD%E6%92%AD%E6%94%BE%E5%A3%B0%E9%9F%B3%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.6.4.</span> <span class="nav-text">Unity 中播放声音的基本使用步骤</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Qihua Gong"
+      src="https://s2.loli.net/2024/02/27/t6ipmhvbDjX7zn5.jpg">
+  <p class="site-author-name" itemprop="name">Qihua Gong</p>
+  <div class="site-description" itemprop="description">Qihua Personal Blog</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/Blog/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/Blog/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/Blog/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/gongqihua" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;gongqihua" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:gongqihua0115@gmail.com" title="E-Mail → mailto:gongqihua0115@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/gongqihua0115/" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;gongqihua0115&#x2F;" rel="noopener" target="_blank"><i class="fab fa-linkedin fa-fw"></i>Linkedin</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/profiles/76561198189728994/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;profiles&#x2F;76561198189728994&#x2F;" rel="noopener" target="_blank"><i class="fab fa-steam fa-fw"></i>Steam</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="/Blog/file/CV_Qihua%20Gong%20phd.pdf" title="&#x2F;file&#x2F;CV_Qihua Gong phd.pdf">CV_Download_EN</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qihua Gong</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/Blog/lib/anime.min.js"></script>
+  <script src="/Blog/lib/velocity/velocity.min.js"></script>
+  <script src="/Blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/Blog/js/utils.js"></script>
+
+<script src="/Blog/js/motion.js"></script>
+
+
+<script src="/Blog/js/schemes/muse.js"></script>
+
+
+<script src="/Blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/Blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
