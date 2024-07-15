@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"gongqihua.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="莉丽冒险世界简介项目知识点概况：  ﻿通过有限状态机实现了人物的动作切换，采用Input System操作玩家。怪物也采用状态机，设计简单的WayPoint类规划巡逻点。 ﻿数据存储为二进制，Json，PlayerPrefs三种形式，Serializable游戏数据对象GameData，便于存取。 ﻿﻿人物动画为Setlnteger等触发方式，效果融合平滑。实现loading，存档，暂定等UI界面">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity莉丽冒险世界">
+<meta property="og:url" content="https://gongqihua.github.io/2024/07/01/Unity%E5%A5%A5%E5%BE%B7%E8%B5%9B/index.html">
+<meta property="og:site_name" content="Qihua&#39;s Blog">
+<meta property="og:description" content="莉丽冒险世界简介项目知识点概况：  ﻿通过有限状态机实现了人物的动作切换，采用Input System操作玩家。怪物也采用状态机，设计简单的WayPoint类规划巡逻点。 ﻿数据存储为二进制，Json，PlayerPrefs三种形式，Serializable游戏数据对象GameData，便于存取。 ﻿﻿人物动画为Setlnteger等触发方式，效果融合平滑。实现loading，存档，暂定等UI界面">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-07-01T05:06:00.000Z">
+<meta property="article:modified_time" content="2024-07-15T06:02:50.908Z">
+<meta property="article:author" content="Qihua Gong">
+<meta property="article:tag" content="U3D">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://gongqihua.github.io/2024/07/01/Unity%E5%A5%A5%E5%BE%B7%E8%B5%9B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Unity莉丽冒险世界 | Qihua's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Qihua's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Personal Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-resume">
+
+    <a href="/file/CV_Qihua%20Gong_EN.pdf" rel="section"><i class="fa fa-file fa-fw"></i>Resume</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gongqihua.github.io/2024/07/01/Unity%E5%A5%A5%E5%BE%B7%E8%B5%9B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s2.loli.net/2024/02/27/t6ipmhvbDjX7zn5.jpg">
+      <meta itemprop="name" content="Qihua Gong">
+      <meta itemprop="description" content="Qihua Personal Blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qihua's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Unity莉丽冒险世界
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-07-01 13:06:00" itemprop="dateCreated datePublished" datetime="2024-07-01T13:06:00+08:00">2024-07-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-07-15 14:02:50" itemprop="dateModified" datetime="2024-07-15T14:02:50+08:00">2024-07-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="莉丽冒险世界"><a href="#莉丽冒险世界" class="headerlink" title="莉丽冒险世界"></a>莉丽冒险世界</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>项目知识点概况：</p>
+<ul>
+<li>﻿通过有限状态机实现了人物的动作切换，采用Input System操作玩家。怪物也采用状态机，设计简单的WayPoint类规划巡逻点。</li>
+<li>﻿数据存储为二进制，Json，PlayerPrefs三种形式，Serializable游戏数据对象GameData，便于存取。</li>
+<li>﻿﻿人物动画为Setlnteger等触发方式，效果融合平滑。实现loading，存档，暂定等UI界面并搭Animation突出效果，用一些协程做效果延迟处理，熟悉特效制作方式。</li>
+<li>﻿使用物理系统计算出人物向量速度，设计多种机关障碍物，泳池沼泽，检查点，传送点，导轨台，跳跃台，旗杆等关卡元素，使用碰撞器触发器和一些3D数学计算。</li>
+<li>﻿﻿使用常见单例和观察者设计模式，注重逻辑解耦。</li>
+</ul>
+<p>由于用了状态机，项目庞大，不能向上个文档那样逐步详解了，只能写个各板块功能的概况，额外写一点项目中遇到的知识难点。<span id="more"></span></p>
+<h2 id="设计文档"><a href="#设计文档" class="headerlink" title="设计文档"></a>设计文档</h2><p>这部分概述了代码各分块的功能和说明：</p>
+<p>核心代码是entity和playstate部分</p>
+<p>设计重点就是维护一个有限状态机，PlayerState包含N多状态，玩家一个时刻只能是处于一个状态，方便管理。而除了状态，切换状态也同样重要，例如<code>player.states.Change&lt;IdlePlayerState&gt;();</code></p>
+<p>经常使用这个Change。</p>
+<p>其余的PlayerStateManager等都是围绕这个状态机来实现的，方便管理用。</p>
+<p><strong>这个游戏的核心就是通过合理的架构维护状态机，然后修正玩家的状态，其中最主要的就是垂直和水平两个速度，各种手感都是维护这两个变量而呈现出来的。</strong></p>
+<h4 id="1-1-Entity"><a href="#1-1-Entity" class="headerlink" title="1.1. Entity"></a>1.1. Entity</h4><p>Entity是一个抽象类，比如Player和Enemy，你要是扩展新的也是可以的。主要处理移动和碰撞，提供一些基础属性和方法</p>
+<h4 id="1-2-EntityEvents"><a href="#1-2-EntityEvents" class="headerlink" title="1.2. EntityEvents"></a>1.2. EntityEvents</h4><p>EntityEvents类定义了由Entity组件触发的所有事件。基础的几个</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> UnityEvent OnGroundEnter;</span><br><span class="line"><span class="keyword">public</span> UnityEvent OnGroundExit;</span><br><span class="line"><span class="keyword">public</span> UnityEvent OnRailsEnter;</span><br><span class="line"><span class="keyword">public</span> UnityEvent OnRailsExit;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-3-EntityHitbox"><a href="#1-3-EntityHitbox" class="headerlink" title="1.3. EntityHitbox"></a>1.3. EntityHitbox</h4><p>挂在人物身上的，主要是对他人造成伤害或破坏，还允许实体通过反弹来施加伤害以对命中事件做出反应；施加一些力是游戏操作更加丝滑真实。</p>
+<h4 id="1-4-EntityState"><a href="#1-4-EntityState" class="headerlink" title="1.4. EntityState"></a>1.4. EntityState</h4><p>所有状态的基类。主要是PlayerState和EnemyState继承的，然后搭配相关的StateManager使用，可以实现更多复杂的状态，以下代码强调子类必须实现这几个接口。</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">OnEnter</span>(<span class="params">T entity</span>)</span>;</span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">OnExit</span>(<span class="params">T entity</span>)</span>;</span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">OnStep</span>(<span class="params">T entity</span>)</span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">OnContact</span>(<span class="params">T entity, Collider other</span>)</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-5-EntityStateManager"><a href="#1-5-EntityStateManager" class="headerlink" title="1.5. EntityStateManager"></a>1.5. EntityStateManager</h4><p>跟上面是搭配使用的，主要是管理状态的，然后可以切换。动画状态机基本就是这个的可视化，这样理解更加直观一些。</p>
+<h4 id="1-6-EntityStateManagerEvents"><a href="#1-6-EntityStateManagerEvents" class="headerlink" title="1.6. EntityStateManagerEvents"></a>1.6. EntityStateManagerEvents</h4><p>核心就这三个事件</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> UnityEvent onChange;</span><br><span class="line"><span class="keyword">public</span> UnityEvent&lt;Type&gt; onEnter;</span><br><span class="line"><span class="keyword">public</span> UnityEvent&lt;Type&gt; onExit;</span><br></pre></td></tr></table></figure>
+
+<p>比如onChange就被PlayerAnimator监听去了，这也就是为什么切换状态的时候人物总是能做对动画，同理怪物的也是。</p>
+<h4 id="1-7-EntityStateManagerListener"><a href="#1-7-EntityStateManagerListener" class="headerlink" title="1.7. EntityStateManagerListener"></a>1.7. EntityStateManagerListener</h4><p>维护一个states状态组，当状态进入或者退出的时候，你关心的这个states就可以做一些操作了，这个用在了人物攻击的时候。</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">OnEnter</span>(<span class="params">Type state</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (states.Contains(state.Name))</span><br><span class="line">    &#123;</span><br><span class="line">        onEnter.Invoke();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-8-EntityStats"><a href="#1-8-EntityStats" class="headerlink" title="1.8. EntityStats"></a>1.8. EntityStats</h4><p>是一个Scriptable脚本记录了所有的状态值，好处是完全可以开放给策划配置，或者说搞一个excel读进来，不过这不是本例子的实现方式。</p>
+<h4 id="1-9-EntityStatsManager"><a href="#1-9-EntityStatsManager" class="headerlink" title="1.9. EntityStatsManager"></a>1.9. EntityStatsManager</h4><p>搭配上面使用的</p>
+<h4 id="1-10-EntityVolumeEffector"><a href="#1-10-EntityVolumeEffector" class="headerlink" title="1.10. EntityVolumeEffector"></a>1.10. EntityVolumeEffector</h4><p>主要是后期的泥浆Mud用这个，可以很好的处理玩家的缓动速度</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">OnTriggerEnter</span>(<span class="params">Collider other</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (other.TryGetComponent(<span class="keyword">out</span> Entity entity))</span><br><span class="line">    &#123;</span><br><span class="line">        entity.velocity *= velocityConversion;</span><br><span class="line">        entity.accelerationMultiplier = accelerationMultiplier;</span><br><span class="line">        entity.topSpeedMultiplier = topSpeedMultiplier;</span><br><span class="line">        entity.decelerationMultiplier = decelerationMultiplier;</span><br><span class="line">        entity.turningDragMultiplier = turningDragMultiplier;</span><br><span class="line">        entity.gravityMultiplier = gravityMultiplier;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-11-PlayerInputManager"><a href="#1-11-PlayerInputManager" class="headerlink" title="1.11. PlayerInputManager"></a>1.11. PlayerInputManager</h4><p>这个主要是读取了配置好的操作表，然后专注于写相应逻辑</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> InputAction m_movement;</span><br><span class="line">m_movement = actions[<span class="string">&quot;Movement&quot;</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> Vector3 <span class="title">GetMovementDirection</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (Time.time &lt; m_movementDirectionUnlockTime) <span class="keyword">return</span> Vector3.zero;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> <span class="keyword">value</span> = m_movement.ReadValue&lt;Vector2&gt;();</span><br><span class="line">    <span class="keyword">return</span> GetAxisWithCrossDeadZone(<span class="keyword">value</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-12-玩家各个状态"><a href="#1-12-玩家各个状态" class="headerlink" title="1.12. 玩家各个状态"></a>1.12. 玩家各个状态</h4><p>在playstate里，直白的命名了，用来给状态机来调用。</p>
+<h2 id="项目涉及"><a href="#项目涉及" class="headerlink" title="项目涉及"></a>项目涉及</h2><ol>
+<li>有限状态机<ol>
+<li>一个时刻只处于一个状态</li>
+<li>切换条件判定</li>
+</ol>
+</li>
+<li>输入系统<ol>
+<li>Input System</li>
+</ol>
+</li>
+<li>序列化存储<ol>
+<li>二进制</li>
+<li>json</li>
+<li>PlayerPrefs</li>
+</ol>
+</li>
+<li>UGUI<ol>
+<li>基础设计</li>
+<li>UI动画</li>
+<li>基础优化</li>
+<li>核心组件</li>
+</ol>
+</li>
+<li>动画切换<ol>
+<li>切换方式</li>
+<li>切换阀值</li>
+<li>优化点</li>
+</ol>
+</li>
+<li>物理计算<ol>
+<li>碰撞和触发</li>
+<li>3D计算</li>
+<li>刚体</li>
+</ol>
+</li>
+<li>设计模式<ol>
+<li>单例模式</li>
+<li>观察者模式</li>
+</ol>
+</li>
+<li>特效制作<ol>
+<li>简单实用</li>
+<li>优化点</li>
+<li>UIPraticle</li>
+</ol>
+</li>
+<li>协程<ol>
+<li>基本原理</li>
+<li>线程区别</li>
+<li>应用场景</li>
+</ol>
+</li>
+<li>怪物巡逻<ol>
+<li>点序列检测计算</li>
+<li>怪物状态机</li>
+</ol>
+</li>
+<li>摄像机控制<ol>
+<li>插件使用</li>
+<li>穿墙设置</li>
+</ol>
+</li>
+</ol>
+<p>项目地址: <a target="_blank" rel="noopener" href="https://github.com/GongQihua">传送门</a>, 演示视频在DEMO文件夹下。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/U3D/" rel="tag"># U3D</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/06/03/AssetBundle%E5%AE%9E%E6%88%98/" rel="prev" title="Unity AssetBundle实战">
+      <i class="fa fa-chevron-left"></i> Unity AssetBundle实战
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8E%89%E4%B8%BD%E5%86%92%E9%99%A9%E4%B8%96%E7%95%8C"><span class="nav-number">1.</span> <span class="nav-text">莉丽冒险世界</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3"><span class="nav-number">1.2.</span> <span class="nav-text">设计文档</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-Entity"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">1.1. Entity</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-EntityEvents"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">1.2. EntityEvents</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-EntityHitbox"><span class="nav-number">1.2.0.3.</span> <span class="nav-text">1.3. EntityHitbox</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-EntityState"><span class="nav-number">1.2.0.4.</span> <span class="nav-text">1.4. EntityState</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-EntityStateManager"><span class="nav-number">1.2.0.5.</span> <span class="nav-text">1.5. EntityStateManager</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-EntityStateManagerEvents"><span class="nav-number">1.2.0.6.</span> <span class="nav-text">1.6. EntityStateManagerEvents</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-7-EntityStateManagerListener"><span class="nav-number">1.2.0.7.</span> <span class="nav-text">1.7. EntityStateManagerListener</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-8-EntityStats"><span class="nav-number">1.2.0.8.</span> <span class="nav-text">1.8. EntityStats</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-9-EntityStatsManager"><span class="nav-number">1.2.0.9.</span> <span class="nav-text">1.9. EntityStatsManager</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-10-EntityVolumeEffector"><span class="nav-number">1.2.0.10.</span> <span class="nav-text">1.10. EntityVolumeEffector</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-11-PlayerInputManager"><span class="nav-number">1.2.0.11.</span> <span class="nav-text">1.11. PlayerInputManager</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-12-%E7%8E%A9%E5%AE%B6%E5%90%84%E4%B8%AA%E7%8A%B6%E6%80%81"><span class="nav-number">1.2.0.12.</span> <span class="nav-text">1.12. 玩家各个状态</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E6%B6%89%E5%8F%8A"><span class="nav-number">1.3.</span> <span class="nav-text">项目涉及</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Qihua Gong"
+      src="https://s2.loli.net/2024/02/27/t6ipmhvbDjX7zn5.jpg">
+  <p class="site-author-name" itemprop="name">Qihua Gong</p>
+  <div class="site-description" itemprop="description">Qihua Personal Blog</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/gongqihua" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;gongqihua" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:gongqihua0115@gmail.com" title="E-Mail → mailto:gongqihua0115@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/gongqihua0115/" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;gongqihua0115&#x2F;" rel="noopener" target="_blank"><i class="fab fa-linkedin fa-fw"></i>Linkedin</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/profiles/76561198189728994/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;profiles&#x2F;76561198189728994&#x2F;" rel="noopener" target="_blank"><i class="fab fa-steam fa-fw"></i>Steam</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="/file/CV_QihuaGong_CN.pdf" title="&#x2F;file&#x2F;CV_QihuaGong_CN.pdf">中文简历</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="/file/CV_Game_CN.pdf" title="&#x2F;file&#x2F;CV_Game_CN.pdf">中文简历_游戏</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qihua Gong</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

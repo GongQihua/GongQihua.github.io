@@ -20,17 +20,23 @@
     var CONFIG = {"hostname":"gongqihua.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Qihua Personal Blog">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Qihua&#39;s Blog">
-<meta property="og:url" content="https://gongqihua.github.io/archives/2024/02/index.html">
+  <meta name="description" content="UI框架实战前言按理来说，个人开发应该直接找个轮椅用，去大厂大螺丝，应该有现成的用。但这个项目是手搓，最基本的那种，用来熟悉一下框架大概需要实现些什么，也是拖UI的底层基础。 UI框架主要实现UILayer作为基类，分别实现Panel（面板）和Window（窗口、弹窗）层，配套搭配对应的PanelController和WindowController实现逻辑和显示的分离。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity UGUI框架实战">
+<meta property="og:url" content="https://gongqihua.github.io/2024/06/02/UI%E6%A1%86%E6%9E%B6%E5%AE%9E%E6%88%98/index.html">
 <meta property="og:site_name" content="Qihua&#39;s Blog">
-<meta property="og:description" content="Qihua Personal Blog">
+<meta property="og:description" content="UI框架实战前言按理来说，个人开发应该直接找个轮椅用，去大厂大螺丝，应该有现成的用。但这个项目是手搓，最基本的那种，用来熟悉一下框架大概需要实现些什么，也是拖UI的底层基础。 UI框架主要实现UILayer作为基类，分别实现Panel（面板）和Window（窗口、弹窗）层，配套搭配对应的PanelController和WindowController实现逻辑和显示的分离。">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://s2.loli.net/2024/07/15/rBUnM96DjetcfLV.webp">
+<meta property="og:image" content="https://s2.loli.net/2024/07/15/ajkvbMyBOJu5xlC.webp">
+<meta property="article:published_time" content="2024-06-02T05:06:00.000Z">
+<meta property="article:modified_time" content="2024-07-15T06:11:00.599Z">
 <meta property="article:author" content="Qihua Gong">
+<meta property="article:tag" content="U3D">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2024/07/15/rBUnM96DjetcfLV.webp">
 
-<link rel="canonical" href="https://gongqihua.github.io/archives/2024/02/">
+<link rel="canonical" href="https://gongqihua.github.io/2024/06/02/UI%E6%A1%86%E6%9E%B6%E5%AE%9E%E6%88%98/">
 
 
 <script id="page-configurations">
@@ -38,12 +44,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
 
-  <title>Archive | Qihua's Blog</title>
+  <title>Unity UGUI框架实战 | Qihua's Blog</title>
   
 
 
@@ -190,90 +196,126 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">Um..! 13 posts in total. Keep on posting.</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gongqihua.github.io/2024/06/02/UI%E6%A1%86%E6%9E%B6%E5%AE%9E%E6%88%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s2.loli.net/2024/02/27/t6ipmhvbDjX7zn5.jpg">
+      <meta itemprop="name" content="Qihua Gong">
+      <meta itemprop="description" content="Qihua Personal Blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qihua's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Unity UGUI框架实战
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-06-02 13:06:00" itemprop="dateCreated datePublished" datetime="2024-06-02T13:06:00+08:00">2024-06-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-07-15 14:11:00" itemprop="dateModified" datetime="2024-07-15T14:11:00+08:00">2024-07-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2024</span>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2024-02-27T20:43:15+08:00"
-              content="2024-02-27">
-          02-27
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2024/02/27/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" itemprop="url">
-            <span itemprop="name">搭建个人博客</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2024-02-27T15:36:34+08:00"
-              content="2024-02-27">
-          02-27
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2024/02/27/picture-URL/" itemprop="url">
-            <span itemprop="name">生成在线URL</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2024-02-27T14:00:01+08:00"
-              content="2024-02-27">
-          02-27
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2024/02/27/proxy-setting/" itemprop="url">
-            <span itemprop="name">系统代理设置</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
+        <h1 id="UI框架实战"><a href="#UI框架实战" class="headerlink" title="UI框架实战"></a>UI框架实战</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>按理来说，个人开发应该直接找个轮椅用，去大厂大螺丝，应该有现成的用。但这个项目是手搓，最基本的那种，用来熟悉一下框架大概需要实现些什么，也是拖UI的底层基础。</p>
+<p>UI框架主要实现UILayer作为基类，分别实现Panel（面板）和Window（窗口、弹窗）层，配套搭配对应的PanelController和WindowController实现逻辑和显示的分离。<span id="more"></span></p>
+<p>通过UIFrame对外部暴露统一开启关闭界面等接口，在显示上合理的划分好节点，做好层级遮挡。</p>
+<p>对于Window实现队列和栈进行弹出的管理，Panel则不用。</p>
+<p>支持界面的传参（Properties类），搭配动画组件和事件系统，形成完整健全的UI框架。</p>
+<p>项目地址: <a target="_blank" rel="noopener" href="https://github.com/GongQihua">传送门</a>, 演示视频在DEMO文件夹下。</p>
+<h2 id="框架的构建和关系"><a href="#框架的构建和关系" class="headerlink" title="框架的构建和关系"></a>框架的构建和关系</h2><p>UIFramework是核心框架，UIFramework example是实现，主要看前者</p>
+<p>其中核心类关系大概是：Controller，layer，动画，事件，和一些窗口属性</p>
+<p>代码自己看，这里只归纳一下大概的框架结构</p>
+<h3 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h3><p>也就是最核心的两个控制器</p>
+<p>PanelController（面板）和WindowlController（窗口、弹窗），</p>
+<p>WindowlController：带有队列和历史记录，方便管理弹出。</p>
+<p>PanelController：则不用记录，主要是用来显示小地图，左上角个人头像之类的面板。</p>
+<p>在UIScreenController里定义了基础接口IScreenController，其中被IWindowController和IPanelController两个实现接口所调用</p>
+<p><img src="https://s2.loli.net/2024/07/15/rBUnM96DjetcfLV.webp" alt="image1"></p>
+<h3 id="Layer"><a href="#Layer" class="headerlink" title="Layer"></a>Layer</h3><p>layer的作用是，在程序跑起来后，管理分层用的</p>
+<p>基类是UILayer&lt; TScreen&gt;这个abstract类，扩展为PanelUILayer和WindowUILayer两个类，分别管理面板和窗口的层级</p>
+<h3 id="动画类"><a href="#动画类" class="headerlink" title="动画类"></a>动画类</h3><p>基层：AniComponent类</p>
+<p>扩展到：</p>
+<p>ScaleScreenAni类（缩放比例大小）</p>
+<p>SlideScreenAni类（切换，上下左右）</p>
+<p>AnimationView类（具体动画实现，封装DoTween之类）</p>
+<p>FadeAni（渐入动画）</p>
+<h3 id="事件类"><a href="#事件类" class="headerlink" title="事件类"></a>事件类</h3><p>根据具体的逻辑，定义的事件结构</p>
+<p><img src="https://s2.loli.net/2024/07/15/ajkvbMyBOJu5xlC.webp" alt="image2"></p>
+<p>事件类Signals.cs在External文件夹下，定义了事件处理</p>
+<h3 id="窗口属性"><a href="#窗口属性" class="headerlink" title="窗口属性"></a>窗口属性</h3><p>最基本的接口属性类，分Panel和Window两大类</p>
+<p>基类IScreenProperties，扩展IPanelProperties和IWindowProperties，面板和窗口</p>
+<p>然后WindowProperties类，扩展CameraProjectionWindowProperties，ConfirmationPopupProperties和PlayerWindowProperties三类，在实现文件夹Screencontrollers下</p>
 
     </div>
-  </div>
-  
-  
-  
 
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/U3D/" rel="tag"># U3D</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/05/02/Unity%E6%97%A0%E5%B0%BD%E5%B0%8F%E8%BD%A6/" rel="prev" title="Unity指尖赛车">
+      <i class="fa fa-chevron-left"></i> Unity指尖赛车
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/06/03/AssetBundle%E5%AE%9E%E6%88%98/" rel="next" title="Unity AssetBundle实战">
+      Unity AssetBundle实战 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
   
 
 
@@ -326,6 +368,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#UI%E6%A1%86%E6%9E%B6%E5%AE%9E%E6%88%98"><span class="nav-number">1.</span> <span class="nav-text">UI框架实战</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A1%86%E6%9E%B6%E7%9A%84%E6%9E%84%E5%BB%BA%E5%92%8C%E5%85%B3%E7%B3%BB"><span class="nav-number">1.2.</span> <span class="nav-text">框架的构建和关系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Controller"><span class="nav-number">1.2.1.</span> <span class="nav-text">Controller</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Layer"><span class="nav-number">1.2.2.</span> <span class="nav-text">Layer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E7%94%BB%E7%B1%BB"><span class="nav-number">1.2.3.</span> <span class="nav-text">动画类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E7%B1%BB"><span class="nav-number">1.2.4.</span> <span class="nav-text">事件类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AA%97%E5%8F%A3%E5%B1%9E%E6%80%A7"><span class="nav-number">1.2.5.</span> <span class="nav-text">窗口属性</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

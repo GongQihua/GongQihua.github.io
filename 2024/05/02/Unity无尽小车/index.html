@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"gongqihua.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="指尖赛车前言Unity 3D无尽小车项目基本点  使用Collider，Rigidbody等物理组件，能做出简单的物理模拟。 根据柏林噪声自动生成地形，可以无限不重复的进行下去。地图采用了2个圆柱地形轮换，属于小型内存池，节省内存空间 使用UGUI制作游戏界面，使用和制作Animation，并且用状态机播放动画。 使用声音和粒子特效增强游戏效果，可以制作简单粒子特效。  该项目主要学习内容在于代码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity指尖赛车">
+<meta property="og:url" content="https://gongqihua.github.io/2024/05/02/Unity%E6%97%A0%E5%B0%BD%E5%B0%8F%E8%BD%A6/index.html">
+<meta property="og:site_name" content="Qihua&#39;s Blog">
+<meta property="og:description" content="指尖赛车前言Unity 3D无尽小车项目基本点  使用Collider，Rigidbody等物理组件，能做出简单的物理模拟。 根据柏林噪声自动生成地形，可以无限不重复的进行下去。地图采用了2个圆柱地形轮换，属于小型内存池，节省内存空间 使用UGUI制作游戏界面，使用和制作Animation，并且用状态机播放动画。 使用声音和粒子特效增强游戏效果，可以制作简单粒子特效。  该项目主要学习内容在于代码">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-05-02T05:06:00.000Z">
+<meta property="article:modified_time" content="2024-07-15T06:02:52.453Z">
+<meta property="article:author" content="Qihua Gong">
+<meta property="article:tag" content="U3D">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://gongqihua.github.io/2024/05/02/Unity%E6%97%A0%E5%B0%BD%E5%B0%8F%E8%BD%A6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Unity指尖赛车 | Qihua's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Qihua's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Personal Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-resume">
+
+    <a href="/file/CV_Qihua%20Gong_EN.pdf" rel="section"><i class="fa fa-file fa-fw"></i>Resume</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gongqihua.github.io/2024/05/02/Unity%E6%97%A0%E5%B0%BD%E5%B0%8F%E8%BD%A6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s2.loli.net/2024/02/27/t6ipmhvbDjX7zn5.jpg">
+      <meta itemprop="name" content="Qihua Gong">
+      <meta itemprop="description" content="Qihua Personal Blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qihua's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Unity指尖赛车
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-05-02 13:06:00" itemprop="dateCreated datePublished" datetime="2024-05-02T13:06:00+08:00">2024-05-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-07-15 14:02:52" itemprop="dateModified" datetime="2024-07-15T14:02:52+08:00">2024-07-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="指尖赛车"><a href="#指尖赛车" class="headerlink" title="指尖赛车"></a>指尖赛车</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Unity 3D无尽小车项目基本点</p>
+<ul>
+<li>使用Collider，Rigidbody等物理组件，能做出简单的物理模拟。</li>
+<li>根据柏林噪声自动生成地形，可以无限不重复的进行下去。地图采用了2个圆柱地形轮换，属于小型内存池，节省内存空间</li>
+<li>使用UGUI制作游戏界面，使用和制作Animation，并且用状态机播放动画。</li>
+<li>使用声音和粒子特效增强游戏效果，可以制作简单粒子特效。</li>
+</ul>
+<p>该项目主要学习内容在于代码生产地形地图的运用，资源包已经扒好了<span id="more"></span></p>
+<p>项目地址: <a target="_blank" rel="noopener" href="https://github.com/GongQihua/3DRaceCar">传送门</a>, 演示视频在DEMO文件夹下。</p>
+<h2 id="小车主体"><a href="#小车主体" class="headerlink" title="小车主体"></a>小车主体</h2><h3 id="拼装小车模型"><a href="#拼装小车模型" class="headerlink" title="拼装小车模型"></a>拼装小车模型</h3><p>车身主题，设置为刚体，不整车设置为碰撞体，设置前保险杠，车身和车顶三个碰撞体</p>
+<p>子类里放汽车网格，往上拖材质，车轮的网格和车身的分开，在设置轮胎的碰撞器</p>
+<p>车身特效也挂在车身下，meshfliter和render是成对使用的。</p>
+<p>汽车使用Unity的内置车轮碰撞器进行悬架物理模拟，网格是分开的。因此汽车很容易更换。</p>
+<p>有Wheel Colliders、Car Meshes和Body Colliders将所有对象都放在单独的父对象下。要更改汽车，最好简单地更换Wheel Mesh和Car Mesh。对于Wheel Meshes，在将它们分配给汽车脚本时一定要确保数组保持相同的顺序，以便它们正确地对应于Wheel Colliders。Body Mesh只要摆正位置就可以了。</p>
+<p>这些碰撞器根据实际网格调整大小，无论何时如果你改变了轮胎尺寸或车身尺寸，请确保添加新的碰撞器或重新调整现有的来匹配汽车。另外请注意前面的碰撞盒。这个盒子应该保持汽车稳定，以防它撞到汽车的前端。此外，车顶的大圆形对撞器是一个触发器，当汽车翻转时，它就会被触发。这样，当汽车失去平衡并翻倒时，我们就可以停止游戏。</p>
+<h3 id="小车代码"><a href="#小车代码" class="headerlink" title="小车代码"></a>小车代码</h3><p>主要部分：控制方向，和模拟轮子向前转</p>
+<p>写了一个检测键盘还是鼠标控制的程序在lateupdate里，主要函数：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">LateUpdate</span>()</span>&#123;</span><br><span class="line">	<span class="comment">//for all wheels</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; wheelMeshes.Length; i++)&#123;	</span><br><span class="line">		<span class="comment">//set the wheel mesh to the position of the wheel collider</span></span><br><span class="line">		Quaternion quat;</span><br><span class="line">		Vector3 pos;</span><br><span class="line">		</span><br><span class="line">		wheelColliders[i].GetWorldPose(<span class="keyword">out</span> pos, <span class="keyword">out</span> quat);</span><br><span class="line">		</span><br><span class="line">		wheelMeshes[i].position = pos;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//rotate the wheel</span></span><br><span class="line">		wheelMeshes[i].Rotate(Vector3.right * Time.deltaTime * wheelRotateSpeed);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>(Input.GetMouseButton(<span class="number">0</span>) || Input.GetAxis(<span class="string">&quot;Horizontal&quot;</span>) != <span class="number">0</span>)&#123;</span><br><span class="line">		UpdateTargetRotation();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(targetRotation != <span class="number">0</span>)&#123;</span><br><span class="line">		<span class="comment">//rotate back to the center</span></span><br><span class="line">		targetRotation = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//apply the rotation by rotating towards the target angle on the y axis</span></span><br><span class="line">	Vector3 rotation = <span class="keyword">new</span> Vector3(transform.localEulerAngles.x, targetRotation, transform.localEulerAngles.z);</span><br><span class="line">	transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(rotation), rotateSpeed * Time.deltaTime);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">UpdateTargetRotation</span>()</span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(Input.GetAxis(<span class="string">&quot;Horizontal&quot;</span>) == <span class="number">0</span>)&#123;</span><br><span class="line">		<span class="comment">//get the mouse position</span></span><br><span class="line">		<span class="keyword">if</span>(Input.mousePosition.x &gt; Screen.width * <span class="number">0.5f</span>)&#123;</span><br><span class="line">			<span class="comment">//rotate right</span></span><br><span class="line">			targetRotation = rotationAngle;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="comment">//rotate left</span></span><br><span class="line">			targetRotation = -rotationAngle;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		targetRotation = (<span class="built_in">int</span>)(rotationAngle * Input.GetAxis(<span class="string">&quot;Horizontal&quot;</span>));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>用碰撞器位置，设置轮子网格位置。</p>
+<p>车是在原地不动的，地图向着车动，角度变化用的欧拉角</p>
+<p>小车防止乱反转记得锁定一下轴翻转</p>
+<h2 id="地图生成"><a href="#地图生成" class="headerlink" title="地图生成"></a>地图生成</h2><h3 id="柏林噪声"><a href="#柏林噪声" class="headerlink" title="柏林噪声"></a>柏林噪声</h3><p>因为地形要求平滑，随机生成点的地图上下会乱跳，这个项目里用的柏林噪声平滑曲线</p>
+<p>柏林噪声专门针对地形生成的，可以去查一下，核心就是要能”平滑地“生成随机数。</p>
+<p>简而言之，我们如果用一个随机数附近几个数的平均值，来替换当前这个值，那么我们得到的随机数则会变得平滑。另外还有一种做法，就是对一维白噪声进行插值，来让它变得平滑。但是，无论是滑动平均数，还是插值，得到的”平滑噪声“都有一个小缺陷：有极大可能，一些地方起伏过高，而一些地方起伏平缓。这样的“山”，依然有一种”突兀感“。怎么办呢？如果我们平滑或者插值的是噪声的“梯度”，也就是高度变化的速率，相当于给平滑的噪声先乘了一个系数，再做了一下积分，那么“突兀”的效果就再次被减小了。这就是柏林噪声的核心原理。</p>
+<p>生成两条line直观对比一下效果</p>
+<p>测试代码：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TestPerlin</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> LineRenderer _lineRenderer;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">float</span> _a = <span class="number">0.86f</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">bool</span> UsePerLin;</span><br><span class="line">    <span class="comment">// Start is called before the first frame update</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        _lineRenderer = GetComponent&lt;LineRenderer&gt;();</span><br><span class="line">        Vector3[] posArr = <span class="keyword">new</span> Vector3[<span class="number">100</span>];</span><br><span class="line">        <span class="built_in">float</span> ranx = Random.Range(<span class="number">1</span>, <span class="number">1000</span>);</span><br><span class="line">        <span class="built_in">float</span> rany = Random.Range(<span class="number">1</span>, <span class="number">1000</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; posArr.Length; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (UsePerLin)</span><br><span class="line">            &#123;</span><br><span class="line">                posArr[i] = <span class="keyword">new</span> Vector3(i * <span class="number">0.1f</span>, Mathf.PerlinNoise(i*_a + ranx, i*_a + rany), <span class="number">0</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                posArr[i] = <span class="keyword">new</span> Vector3(i * <span class="number">0.1f</span>, Random.<span class="keyword">value</span>, <span class="number">0</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        _lineRenderer.SetPositions(posArr);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="生成地形"><a href="#生成地形" class="headerlink" title="生成地形"></a>生成地形</h3><p>具体代码移步文件 WorldGenerator.cs</p>
+<p>Mesh：是指模型的网格，Mesh的主要属性内容包括顶点坐标，法线，纹理坐标，三角形绘制序列等其他有用属性和功能。因此建网格，就是画三角形；画三角形就是定位三个点。<br>Mesh Filter：内包含一个Mesh组件，可以根据MeshFilter获得模型网格的组件，也可以为MeshFilter设置Mesh内容。<br>Mesh Render：是用于把网格渲染出来的组件。MeshFilter的作用就是把Mesh扔给MeshRender将模型或者说是几何体绘制显示出来。</p>
+<p><strong>地图</strong></p>
+<p>最主要的是scale和dimensions共同决定了地形的大小和细节。Scale就是单个顶点的距离,dimensions表示构成三角形的数量。共同作用生成Mesh。比如将默认scale从0.8更改为1.6,并将x dimensions设置为18而不是32,网格将它们看起来大多一样,只是细节更少。这背后的原因是,在3d空间中增加一半的点,但将其分散到两倍的距离,从而得到相同的大小。</p>
+<p>另一个重要值是perlin scale。可以调整这个值来调整粗糙度。地形例如,减小该值将使地形变得平滑,而<br>增加该值会使地形越粗糙,使得控制汽车变得更加困难。还可以设置wave height。将控制隧道内草丘的高度。较小的值使驾驶更平稳,而更高的值将使山丘更大,驾驶更困难。</p>
+<p>然后是offset偏移值,这个主要是控制地形的形状的。每次一样的话,将会生成同样的地形。结合<br>randomness随机地形,这个值越大当前生成的与之前的差距就越明显,反之就小。</p>
+<p><strong>程序地形生成</strong></p>
+<ul>
+<li>首先生成了一个三角形。只需要创建一个新的网格和在三角形数组中添加三个顶点（每个角一个）和三个索引以引用我们的顶点。</li>
+<li>array（三个新角）我们可以添加另一个三角形并创建一个正方形</li>
+<li>接下来，使用两个for循环，从正方形连起来生成了一个完整的平面</li>
+<li>最后对于圆柱体，平面需要被包裹成新的形状在顶点上使用余弦和正弦</li>
+</ul>
+<p>对应了最重要的那个函数 CreateShape，注释都写好了，自己看吧</p>
+<h3 id="移动"><a href="#移动" class="headerlink" title="移动"></a>移动</h3><p>其实是地图移动，而不是小车移动，让地图向着小车移动，方便无尽拼接地图，主要就是一行代码：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">transform.Translate(Vector3.forward * movespeed * Time.deltaTime);</span><br></pre></td></tr></table></figure>
+
+<p>别忘了挂上脚本，在worldGenerate代码里挂上（AddComponent）</p>
+<p>要给灯光也挂上这个脚本，不然地形走了，灯光没跟上😂</p>
+<p>控制镜头写在后面</p>
+<h3 id="无尽地形"><a href="#无尽地形" class="headerlink" title="无尽地形"></a>无尽地形</h3><p>上面生成的圆柱体只是一段，走完就没了，要达成无尽的效果，这里用的方法是，两段圆柱互相拼接的方法，走完的地图摧毁掉，重新生成拼接在后面</p>
+<p>方法就是生成两个地形，先走一再走二，走二的时候销毁一接到二后面，写在start里</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Start</span>()</span>&#123;</span><br><span class="line">		beginPoints = <span class="keyword">new</span> Vector3[(<span class="built_in">int</span>)dimensions.x + <span class="number">1</span>];</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//start by generating two world pieces</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span>; i++)&#123;</span><br><span class="line">			GenerateWorldPiece(i);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>用一个数组收集生成的地图块，方便切换</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">GenerateWorldPiece</span>(<span class="params"><span class="built_in">int</span> i</span>)</span>&#123;</span><br><span class="line">		<span class="comment">//create a new cylinder and put it in the pieces array</span></span><br><span class="line">		pieces[i] = CreateCylinder();</span><br><span class="line">		<span class="comment">//position the cylinder according to its index</span></span><br><span class="line">		pieces[i].transform.Translate(Vector3.forward * (dimensions.y * scale * Mathf.PI) * i);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//update this piece so it will have an endpoint and it will move etc.</span></span><br><span class="line">		UpdateSinglePiece(pieces[i]);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后标记尾部位置，因为我们需要知道一个地图什么时候走完了，地形移动也挂载在这个函数下</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">UpdateSinglePiece</span>(<span class="params">GameObject piece</span>)</span>&#123;</span><br><span class="line">		<span class="comment">//add the basic movement script to our newly generated piece to make it move towards the player</span></span><br><span class="line">		BasicMovement movement = piece.AddComponent&lt;BasicMovement&gt;();</span><br><span class="line">		<span class="comment">//make it move with a speed of globalspeed</span></span><br><span class="line">		movement.movespeed = -globalSpeed;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//set the rotate speed to the lamp (directional light) rotate speed </span></span><br><span class="line">		<span class="keyword">if</span>(lampMovement != <span class="literal">null</span>)</span><br><span class="line">			movement.rotateSpeed = lampMovement.rotateSpeed;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//create an endpoint for this piece</span></span><br><span class="line">		GameObject endPoint = <span class="keyword">new</span> GameObject();</span><br><span class="line">		endPoint.transform.position = piece.transform.position + Vector3.forward * (dimensions.y * scale * Mathf.PI);</span><br><span class="line">		endPoint.transform.parent = piece.transform;</span><br><span class="line">		endPoint.name = <span class="string">&quot;End Point&quot;</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//change the perlin noise offset to make sure each piece is different from the last one</span></span><br><span class="line">		offset += randomness;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//change the obstacle chance which means there will be more obstacles over time</span></span><br><span class="line">		<span class="keyword">if</span>(startObstacleChance &gt; <span class="number">5</span>)</span><br><span class="line">			startObstacleChance -= obstacleChanceAcceleration;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>更新地形，循环拼接地图，异步更新运算，写在Lateupdate里</p>
+<p>首先，异步地图点检测，拼接替换：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">IEnumerator <span class="title">UpdateWorldPieces</span>()</span>&#123;</span><br><span class="line">		<span class="comment">//remove the first piece (that is not visible to the player anymore)</span></span><br><span class="line">		Destroy(pieces[<span class="number">0</span>]);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//assign the second piece to the first piece in the world array</span></span><br><span class="line">		pieces[<span class="number">0</span>] = pieces[<span class="number">1</span>];</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//new create a new second piece</span></span><br><span class="line">		pieces[<span class="number">1</span>] = CreateCylinder();</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//position the new piece and rotate it to match the first piece</span></span><br><span class="line">		pieces[<span class="number">1</span>].transform.position = pieces[<span class="number">0</span>].transform.position + Vector3.forward * (dimensions.y * scale * Mathf.PI);</span><br><span class="line">		pieces[<span class="number">1</span>].transform.rotation = pieces[<span class="number">0</span>].transform.rotation;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//update this newly generated world piece</span></span><br><span class="line">		UpdateSinglePiece(pieces[<span class="number">1</span>]);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//wait a frame</span></span><br><span class="line">		<span class="keyword">yield</span> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后实时更新地图</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">LateUpdate</span>()</span>&#123;</span><br><span class="line">		<span class="comment">//if the second piece is close enough to the player, we can remove the first piece and update the terrain</span></span><br><span class="line">		<span class="keyword">if</span>(pieces[<span class="number">1</span>] &amp;&amp; pieces[<span class="number">1</span>].transform.position.z &lt;= <span class="number">0</span>)</span><br><span class="line">			StartCoroutine(UpdateWorldPieces());</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//update all items in the scene like spikes and gates</span></span><br><span class="line">		UpdateAllItems();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">UpdateAllItems</span>()</span>&#123;</span><br><span class="line">		<span class="comment">//find all items</span></span><br><span class="line">		GameObject[] items = GameObject.FindGameObjectsWithTag(<span class="string">&quot;Item&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//for all items</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; items.Length; i++)&#123;</span><br><span class="line">			<span class="comment">//get all meshrenderers of this item</span></span><br><span class="line">			<span class="keyword">foreach</span>(MeshRenderer renderer <span class="keyword">in</span> items[i].GetComponentsInChildren&lt;MeshRenderer&gt;())&#123;</span><br><span class="line">				<span class="comment">//show this item if it&#x27;s sufficiently close to the player</span></span><br><span class="line">				<span class="built_in">bool</span> show = items[i].transform.position.z &lt; showItemDistance;</span><br><span class="line"></span><br><span class="line">				<span class="keyword">if</span>(show)</span><br><span class="line">					renderer.shadowCastingMode = (items[i].transform.position.y &lt; shadowHeight) ? ShadowCastingMode.On : ShadowCastingMode.Off;</span><br><span class="line">				</span><br><span class="line">				<span class="comment">//only enable the renderer if we want to show this item</span></span><br><span class="line">				renderer.enabled = show;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是仔细看的时候，会发现地图连接处有空白，两个地图能看出明显的切换</p>
+<p>所以这里要优化一下，首先记录一下开始的点beginpoint，然后随机一点柏林噪声生成的图，y &#x3D; kx+b，b随机，最后把判断点后移，让两段地图重叠一段，不要跑过了地图一立即切换</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(z &lt; startTransitionLength &amp;&amp; beginPoints[<span class="number">0</span>] != Vector3.zero)&#123;</span><br><span class="line">					<span class="comment">//if so, we must combine the perlin noise value with the begin points</span></span><br><span class="line">					<span class="comment">//we need to increase the percentage of the vertice that comes from the perlin noise </span></span><br><span class="line">					<span class="comment">//and decrease the percentage from the begin point</span></span><br><span class="line">					<span class="comment">//this way it will transition from the last world piece to the new perlin noise values</span></span><br><span class="line">					</span><br><span class="line">					<span class="comment">//the percentage of perlin noise in the vertices will increase while we&#x27;re moving further into the cylinder</span></span><br><span class="line">					<span class="built_in">float</span> perlinPercentage = z * (<span class="number">1f</span>/startTransitionLength);</span><br><span class="line">					<span class="comment">//don&#x27;t use the z begin point since it will not have the correct position and we only care about the noise on x and y axis</span></span><br><span class="line">					Vector3 beginPoint = <span class="keyword">new</span> Vector3(beginPoints[x].x, beginPoints[x].y, vertices[index].z);</span><br><span class="line">					</span><br><span class="line">					<span class="comment">//combine the begin point(which are the last vertices from the previous world piece) and original vertice to smoothly transition to the new world piece</span></span><br><span class="line">					vertices[index] = (perlinPercentage * vertices[index]) + ((<span class="number">1f</span> - perlinPercentage) * beginPoint);</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">else</span> <span class="keyword">if</span>(z == zCount)&#123;</span><br><span class="line">					<span class="comment">//it these are the last vertices, update the begin points so the next piece will transition smoothly as well</span></span><br><span class="line">					beginPoints[x] = vertices[index];</span><br><span class="line">				&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="相机跟随"><a href="#相机跟随" class="headerlink" title="相机跟随"></a>相机跟随</h2><p>首先，防止乱翻，冻结一下角度，position freeze x和z，rotation freeze y和z，车基本能正常跑了</p>
+<p>然后编写相机跟随脚本CameraFollow</p>
+<p>upate里监听鼠标事件</p>
+<p>Lateupdate里更新视角，算高度和角度，用欧拉角计算，相机跟随脚本：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">LateUpdate</span>()</span>&#123;		</span><br><span class="line">		<span class="comment">//Check if the camera has a target to follow</span></span><br><span class="line">        <span class="keyword">if</span>(!camTarget)</span><br><span class="line">            <span class="keyword">return</span>;		</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//Some private variables for the rotation and position of the camera</span></span><br><span class="line">        <span class="built_in">float</span> wantedRotationAngle = camTarget.eulerAngles.y;</span><br><span class="line">        <span class="built_in">float</span> wantedHeight = camTarget.position.y + height;</span><br><span class="line">        <span class="built_in">float</span> currentRotationAngle = transform.eulerAngles.y;</span><br><span class="line">        <span class="built_in">float</span> currentHeight = transform.position.y;</span><br><span class="line">		</span><br><span class="line">        currentRotationAngle = Mathf.LerpAngle(currentRotationAngle, wantedRotationAngle, rotationDamping * Time.deltaTime);</span><br><span class="line"> </span><br><span class="line">        currentHeight = Mathf.Lerp(currentHeight, wantedHeight, heightDamping * Time.deltaTime);</span><br><span class="line"> </span><br><span class="line">        Quaternion currentRotation = Quaternion.Euler(<span class="number">0</span>, currentRotationAngle, <span class="number">0</span>);</span><br><span class="line">     </span><br><span class="line">        transform.position = camTarget.position;</span><br><span class="line">        transform.position -= currentRotation * Vector3.forward * distance;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//Set camera postition</span></span><br><span class="line">        transform.position = <span class="keyword">new</span> Vector3(transform.position.x, currentHeight, transform.position.z);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//Look at the camera target</span></span><br><span class="line">        transform.LookAt(camTarget);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="添加粒子效果"><a href="#添加粒子效果" class="headerlink" title="添加粒子效果"></a>添加粒子效果</h2><p>增加粒子和打滑效果，把组件partical system拖上去，添加材质粒子，调整一下角度大小</p>
+<p>在轮子底部再创建一个打滑的印记object，打滑效果脚本实现，写一个协程</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">IEnumerator <span class="title">SkidMark</span>()</span>&#123;</span><br><span class="line">		<span class="comment">//loops continuesly</span></span><br><span class="line">		<span class="keyword">while</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">			<span class="comment">//wait for the delay in between individual skid marks</span></span><br><span class="line">			<span class="function"><span class="keyword">yield</span> <span class="keyword">return</span> <span class="keyword">new</span> <span class="title">WaitForSeconds</span>(<span class="params">skidMarkDelay</span>)</span>;</span><br><span class="line">			</span><br><span class="line">			<span class="comment">//show skidmarks if we need skidmarks now</span></span><br><span class="line">			<span class="keyword">if</span>(skidMarkRoutine)&#123;</span><br><span class="line">				<span class="comment">//for both rear wheels, instantiate a skid mark and parent it to the environment so it moves realistically</span></span><br><span class="line">				<span class="keyword">for</span>(<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; skidMarkPivots.Length; i++)&#123;</span><br><span class="line">					GameObject newskidMark = Instantiate(skidMark, skidMarkPivots[i].position, skidMarkPivots[i].rotation);</span><br><span class="line">					newskidMark.transform.parent = generator.GetWorldPiece();</span><br><span class="line">					newskidMark.transform.localScale = <span class="keyword">new</span> Vector3(<span class="number">1</span>, <span class="number">1</span>, <span class="number">4</span>) * skidMarkSize;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在小车添加代码，更新车轮痕迹和粒子特效，由于是物理的，要写在fixUpdate里</p>
+<p>检测轮子是不是在地上，用Physics.Raycast射线的办法，轮子在地上再出痕迹，顺便加个力稳定一下车子</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">UpdateEffects</span>()</span>&#123;</span><br><span class="line">		<span class="comment">//if both wheels are off the ground, add force will be true</span></span><br><span class="line">		<span class="built_in">bool</span> addForce = <span class="literal">true</span>;</span><br><span class="line">		<span class="comment">//check if we rotated the car since last frame</span></span><br><span class="line">		<span class="built_in">bool</span> rotated = Mathf.Abs(lastRotation - transform.localEulerAngles.y) &gt; minRotationDifference;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//for both grass effects (rear wheels)</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span>; i++)&#123;</span><br><span class="line">			<span class="comment">//get the rear wheels (one of them in each iteration)</span></span><br><span class="line">			Transform wheelMesh = wheelMeshes[i + <span class="number">2</span>];</span><br><span class="line">			</span><br><span class="line">			<span class="comment">//check if this wheel is grounded currently</span></span><br><span class="line">			<span class="keyword">if</span>(Physics.Raycast(wheelMesh.position, Vector3.down, grassEffectOffset * <span class="number">1.5f</span>))&#123;</span><br><span class="line">				<span class="comment">//if so, show the grass effect</span></span><br><span class="line">				<span class="keyword">if</span>(!grassEffects[i].gameObject.activeSelf)</span><br><span class="line">					grassEffects[i].gameObject.SetActive(<span class="literal">true</span>);</span><br><span class="line">				</span><br><span class="line">				<span class="comment">//update the grass effect height and the skidmark height to match this wheel</span></span><br><span class="line">				<span class="built_in">float</span> effectHeight = wheelMesh.position.y - grassEffectOffset;</span><br><span class="line">				Vector3 targetPosition = <span class="keyword">new</span> Vector3(grassEffects[i].position.x, effectHeight, wheelMesh.position.z);</span><br><span class="line">				grassEffects[i].position = targetPosition;</span><br><span class="line">				skidMarkPivots[i].position = targetPosition;</span><br><span class="line">				</span><br><span class="line">				<span class="comment">//this wheel is grounded so we don&#x27;t need any extra force at the back of the car</span></span><br><span class="line">				addForce = <span class="literal">false</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span>(grassEffects[i].gameObject.activeSelf)&#123;</span><br><span class="line">				<span class="comment">//if we&#x27;re not grounded, don&#x27;t show the grass effect</span></span><br><span class="line">				grassEffects[i].gameObject.SetActive(<span class="literal">false</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//add force at the back of the car for stabilization</span></span><br><span class="line">		<span class="keyword">if</span>(addForce)&#123;</span><br><span class="line">			rb.AddForceAtPosition(back.position, Vector3.down * constantBackForce);</span><br><span class="line">			<span class="comment">//don&#x27;t show the skidmarks</span></span><br><span class="line">			skidMarkRoutine = <span class="literal">false</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="keyword">if</span>(targetRotation != <span class="number">0</span>)&#123;</span><br><span class="line">				<span class="comment">//if the car has rotated show the skid mark</span></span><br><span class="line">				<span class="keyword">if</span>(rotated &amp;&amp; !skidMarkRoutine)&#123;</span><br><span class="line">					skidMarkRoutine = <span class="literal">true</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">else</span> <span class="keyword">if</span>(!rotated &amp;&amp; skidMarkRoutine)&#123;</span><br><span class="line">					skidMarkRoutine = <span class="literal">false</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span>&#123;</span><br><span class="line">				<span class="comment">//don&#x27;t show the skidmark if we&#x27;re rotating back to the center</span></span><br><span class="line">				skidMarkRoutine = <span class="literal">false</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//update the last rotation (which is now the current rotation since everything has been updated)</span></span><br><span class="line">		lastRotation = transform.localEulerAngles.y;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="障碍物和门"><a href="#障碍物和门" class="headerlink" title="障碍物和门"></a>障碍物和门</h2><p>游戏目前由两个项目组成，即钉刺障碍和玩家应该通过的大门。通过驾驶来获得积分。设置任何障碍所需的主要组件是以下内容：</p>
+<ul>
+<li>﻿﻿障碍物应具有collider</li>
+<li>﻿﻿障碍物应具有障碍物脚本</li>
+<li>﻿﻿障碍标记tag为“item</li>
+</ul>
+<p>此外，请确保障碍物的起点位于底部中心，以便将其定位在正确地驶上地形</p>
+<p>创建障碍后将其添加到 prefabs 文件夹中，并将新预制件添加到world generator中的obstacles数组中。</p>
+<p>除了障碍物，还有gate来得分。为了得分，门有一个额外的collider，这是一个非常小的碰撞盒，is trigger选上。重要的就是请确保正确将触发器放在中心，并尽可能小，这样当我们击中门本身时就不会触发它</p>
+<p>脚本写在WorldGenerate里</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CreateItem</span>(<span class="params">Vector3 vert, <span class="built_in">int</span> x</span>)</span>&#123;</span><br><span class="line">		<span class="comment">//get the center of the cylinder but use the z value from the vertice</span></span><br><span class="line">		Vector3 zCenter = <span class="keyword">new</span> Vector3(<span class="number">0</span>, <span class="number">0</span>, vert.z);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//check if we get a correct angle between the center and the vertice</span></span><br><span class="line">		<span class="keyword">if</span>(zCenter - vert == Vector3.zero || x == (<span class="built_in">int</span>)dimensions.x/<span class="number">4</span> || x == (<span class="built_in">int</span>)dimensions.x/<span class="number">4</span> * <span class="number">3</span>)</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//create a new item with a small chance of being a gate (gateChance) and a big chance of being an obstacle</span></span><br><span class="line">		GameObject newItem = Instantiate((Random.Range(<span class="number">0</span>, gateChance) == <span class="number">0</span>) ? gate : obstacles[Random.Range(<span class="number">0</span>, obstacles.Length)]);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//rotate the item inwards towards the center position</span></span><br><span class="line">		newItem.transform.rotation = Quaternion.LookRotation(zCenter - vert, Vector3.up);</span><br><span class="line">		<span class="comment">//position the item at the vertice position</span></span><br><span class="line">		newItem.transform.position = vert;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//parent the new item to the current cylinder so it will move and rotate along</span></span><br><span class="line">		newItem.transform.SetParent(currentCylinder.transform, <span class="literal">false</span>);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后记得调整一下障碍物和门的朝向</p>
+<h2 id="创建UI界面"><a href="#创建UI界面" class="headerlink" title="创建UI界面"></a>创建UI界面</h2><h3 id="主游戏里的界面"><a href="#主游戏里的界面" class="headerlink" title="主游戏里的界面"></a>主游戏里的界面</h3><p>创建一个GameManager对象，然后创一个canvas，canvas下再创个文本，ui自己拖一下吧</p>
+<p>文本写上分数和时间，脚本写一个穿过门的加分逻辑，外加gameover界面，自己拖一下</p>
+<p>gameover还要停止车所有行动</p>
+<p>用PlayerPrefs小型数据库存储得分</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">SetScore</span>()</span>&#123;</span><br><span class="line">	<span class="comment">//update the highscore if our score is higher then the previous best score</span></span><br><span class="line">	<span class="keyword">if</span>(score &gt; PlayerPrefs.GetInt(<span class="string">&quot;best&quot;</span>))</span><br><span class="line">		PlayerPrefs.SetInt(<span class="string">&quot;best&quot;</span>, score);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//show the score and the high score</span></span><br><span class="line">	gameOverScoreLabel.text = <span class="string">&quot;score: &quot;</span> + score;</span><br><span class="line">	gameOverBestLabel.text = <span class="string">&quot;best: &quot;</span> + PlayerPrefs.GetInt(<span class="string">&quot;best&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>另在障碍物的代码里，加入撞到障碍物，就调出gamemanager的界面</p>
+<h3 id="结束界面和动画"><a href="#结束界面和动画" class="headerlink" title="结束界面和动画"></a>结束界面和动画</h3><p>创一个canvas，做结束界面，上面想要什么可以加，这里只做了最基本的</p>
+<p>设一个动画，飞入，哈哈，附上脚本，播放</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">GameOver</span>()</span>&#123;</span><br><span class="line">	<span class="comment">//the game cannot be over multiple times so we need to return if the game was over already</span></span><br><span class="line">	<span class="keyword">if</span>(gameOver)</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//update the score and highscore</span></span><br><span class="line">	SetScore();</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//show the game over animation and play the audio</span></span><br><span class="line">	gameOverAnimator.SetTrigger(<span class="string">&quot;Game over&quot;</span>);</span><br><span class="line">	gameOverAudio.Play();</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//the game is over</span></span><br><span class="line">	gameOver = <span class="literal">true</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//break the car</span></span><br><span class="line">	car.FallApart();</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//stop the world from moving or rotating</span></span><br><span class="line">	<span class="keyword">foreach</span>(BasicMovement basicMovement <span class="keyword">in</span> GameObject.FindObjectsOfType&lt;BasicMovement&gt;())&#123;</span><br><span class="line">		basicMovement.movespeed = <span class="number">0</span>;</span><br><span class="line">		basicMovement.rotateSpeed = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>另添加一个小车碰到障碍物撞毁的脚本在car里，资源prefab已经有了</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">FallApart</span>()</span>&#123;</span><br><span class="line">	<span class="comment">//destroy the car</span></span><br><span class="line">	Instantiate(ragdoll, transform.position, transform.rotation);</span><br><span class="line">	gameObject.SetActive(<span class="literal">false</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>顺便，撞到门也要摧毁，包括穿过门加分，脚本写在Gate.cs里</p>
+<h3 id="主界面"><a href="#主界面" class="headerlink" title="主界面"></a>主界面</h3><p>新创一个主界面scene，作为主界面</p>
+<p>background把地图生成代码挂上，看着好看一点</p>
+<p>然后写脚本main menu，设置主界面跳转game的scene</p>
+<p>用eventsystem判断是否点在ui上</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (Input.GetKeyDown(KeyCode.Return) ||</span><br><span class="line">	    (Input.GetMouseButtonDown(<span class="number">0</span>) &amp;&amp; !EventSystem.current.IsPointerOverGameObject()))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (!(Input.touchCount &gt; <span class="number">0</span> &amp;&amp; Input.GetTouch(<span class="number">0</span>).phase == TouchPhase.Began &amp;&amp;</span><br><span class="line">		     EventSystem.current.IsPointerOverGameObject((Input.GetTouch(<span class="number">0</span>).fingerId))))</span><br><span class="line">		&#123;</span><br><span class="line">			StartGame();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">StartGame</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">	UIAnimator.SetTrigger(<span class="string">&quot;Start&quot;</span>);</span><br><span class="line">	StartCoroutine(LoadScene(<span class="string">&quot;Game&quot;</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">IEnumerator <span class="title">LoadScene</span>(<span class="params"><span class="built_in">string</span> scene</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="keyword">yield</span> <span class="keyword">return</span> <span class="keyword">new</span> <span class="title">WaitForSeconds</span>(<span class="params"><span class="number">0.6f</span></span>)</span>;</span><br><span class="line"></span><br><span class="line">	SceneManager.LoadScene(scene);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>再简单写个music脚本，持续循环播放，挂上！结束！完结撒花🎉</p>
+<blockquote>
+<p>第一次写没有教程的项目，可能看着有点乱，脚本思路也是想到哪写到哪，下次注意！</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/U3D/" rel="tag"># U3D</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/04/09/Ruby_Adventure_2D_Beginner/" rel="prev" title="Ruby's Adventure 2D Beginner">
+      <i class="fa fa-chevron-left"></i> Ruby's Adventure 2D Beginner
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/06/02/UI%E6%A1%86%E6%9E%B6%E5%AE%9E%E6%88%98/" rel="next" title="Unity UGUI框架实战">
+      Unity UGUI框架实战 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8C%87%E5%B0%96%E8%B5%9B%E8%BD%A6"><span class="nav-number">1.</span> <span class="nav-text">指尖赛车</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E8%BD%A6%E4%B8%BB%E4%BD%93"><span class="nav-number">1.2.</span> <span class="nav-text">小车主体</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%BC%E8%A3%85%E5%B0%8F%E8%BD%A6%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.2.1.</span> <span class="nav-text">拼装小车模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E8%BD%A6%E4%BB%A3%E7%A0%81"><span class="nav-number">1.2.2.</span> <span class="nav-text">小车代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%B0%E5%9B%BE%E7%94%9F%E6%88%90"><span class="nav-number">1.3.</span> <span class="nav-text">地图生成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0"><span class="nav-number">1.3.1.</span> <span class="nav-text">柏林噪声</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%9C%B0%E5%BD%A2"><span class="nav-number">1.3.2.</span> <span class="nav-text">生成地形</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8"><span class="nav-number">1.3.3.</span> <span class="nav-text">移动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E5%B0%BD%E5%9C%B0%E5%BD%A2"><span class="nav-number">1.3.4.</span> <span class="nav-text">无尽地形</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E6%9C%BA%E8%B7%9F%E9%9A%8F"><span class="nav-number">1.4.</span> <span class="nav-text">相机跟随</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E7%B2%92%E5%AD%90%E6%95%88%E6%9E%9C"><span class="nav-number">1.5.</span> <span class="nav-text">添加粒子效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%9C%E7%A2%8D%E7%89%A9%E5%92%8C%E9%97%A8"><span class="nav-number">1.6.</span> <span class="nav-text">障碍物和门</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAUI%E7%95%8C%E9%9D%A2"><span class="nav-number">1.7.</span> <span class="nav-text">创建UI界面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E6%B8%B8%E6%88%8F%E9%87%8C%E7%9A%84%E7%95%8C%E9%9D%A2"><span class="nav-number">1.7.1.</span> <span class="nav-text">主游戏里的界面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9D%9F%E7%95%8C%E9%9D%A2%E5%92%8C%E5%8A%A8%E7%94%BB"><span class="nav-number">1.7.2.</span> <span class="nav-text">结束界面和动画</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E7%95%8C%E9%9D%A2"><span class="nav-number">1.7.3.</span> <span class="nav-text">主界面</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Qihua Gong"
+      src="https://s2.loli.net/2024/02/27/t6ipmhvbDjX7zn5.jpg">
+  <p class="site-author-name" itemprop="name">Qihua Gong</p>
+  <div class="site-description" itemprop="description">Qihua Personal Blog</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/gongqihua" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;gongqihua" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:gongqihua0115@gmail.com" title="E-Mail → mailto:gongqihua0115@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/gongqihua0115/" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;gongqihua0115&#x2F;" rel="noopener" target="_blank"><i class="fab fa-linkedin fa-fw"></i>Linkedin</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/profiles/76561198189728994/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;profiles&#x2F;76561198189728994&#x2F;" rel="noopener" target="_blank"><i class="fab fa-steam fa-fw"></i>Steam</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="/file/CV_QihuaGong_CN.pdf" title="&#x2F;file&#x2F;CV_QihuaGong_CN.pdf">中文简历</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="/file/CV_Game_CN.pdf" title="&#x2F;file&#x2F;CV_Game_CN.pdf">中文简历_游戏</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qihua Gong</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
