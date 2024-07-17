@@ -22,7 +22,7 @@
 
   <meta name="description" content="UI框架实战前言按理来说，个人开发应该直接找个轮椅用，去大厂大螺丝，应该有现成的用。但这个项目是手搓，最基本的那种，用来熟悉一下框架大概需要实现些什么，也是拖UI的底层基础。 UI框架主要实现UILayer作为基类，分别实现Panel（面板）和Window（窗口、弹窗）层，配套搭配对应的PanelController和WindowController实现逻辑和显示的分离。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Unity UGUI框架实战">
+<meta property="og:title" content="Unity UI框架实战">
 <meta property="og:url" content="https://gongqihua.github.io/2024/06/02/UI%E6%A1%86%E6%9E%B6%E5%AE%9E%E6%88%98/index.html">
 <meta property="og:site_name" content="Qihua&#39;s Blog">
 <meta property="og:description" content="UI框架实战前言按理来说，个人开发应该直接找个轮椅用，去大厂大螺丝，应该有现成的用。但这个项目是手搓，最基本的那种，用来熟悉一下框架大概需要实现些什么，也是拖UI的底层基础。 UI框架主要实现UILayer作为基类，分别实现Panel（面板）和Window（窗口、弹窗）层，配套搭配对应的PanelController和WindowController实现逻辑和显示的分离。">
@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://s2.loli.net/2024/07/15/rBUnM96DjetcfLV.webp">
 <meta property="og:image" content="https://s2.loli.net/2024/07/15/ajkvbMyBOJu5xlC.webp">
 <meta property="article:published_time" content="2024-06-02T05:06:00.000Z">
-<meta property="article:modified_time" content="2024-07-15T06:11:00.599Z">
+<meta property="article:modified_time" content="2024-07-17T00:52:34.037Z">
 <meta property="article:author" content="Qihua Gong">
 <meta property="article:tag" content="U3D">
 <meta name="twitter:card" content="summary">
@@ -49,7 +49,7 @@
   };
 </script>
 
-  <title>Unity UGUI框架实战 | Qihua's Blog</title>
+  <title>Unity UI框架实战 | Qihua's Blog</title>
   
 
 
@@ -216,7 +216,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Unity UGUI框架实战
+          Unity UI框架实战
         </h1>
 
         <div class="post-meta">
@@ -233,7 +233,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-07-15 14:11:00" itemprop="dateModified" datetime="2024-07-15T14:11:00+08:00">2024-07-15</time>
+                <time title="Modified: 2024-07-17 08:52:34" itemprop="dateModified" datetime="2024-07-17T08:52:34+08:00">2024-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -261,7 +261,7 @@
 <p>通过UIFrame对外部暴露统一开启关闭界面等接口，在显示上合理的划分好节点，做好层级遮挡。</p>
 <p>对于Window实现队列和栈进行弹出的管理，Panel则不用。</p>
 <p>支持界面的传参（Properties类），搭配动画组件和事件系统，形成完整健全的UI框架。</p>
-<p>项目地址: <a target="_blank" rel="noopener" href="https://github.com/GongQihua">传送门</a>, 演示视频在DEMO文件夹下。</p>
+<p>项目地址: <a target="_blank" rel="noopener" href="https://github.com/GongQihua/UIFramework">传送门</a>, 演示视频在DEMO文件夹下。</p>
 <h2 id="框架的构建和关系"><a href="#框架的构建和关系" class="headerlink" title="框架的构建和关系"></a>框架的构建和关系</h2><p>UIFramework是核心框架，UIFramework example是实现，主要看前者</p>
 <p>其中核心类关系大概是：Controller，layer，动画，事件，和一些窗口属性</p>
 <p>代码自己看，这里只归纳一下大概的框架结构</p>

@@ -422,7 +422,7 @@
     <url>/2024/06/03/AssetBundle%E5%AE%9E%E6%88%98/</url>
     <content><![CDATA[<h1 id="AssetBundle实战（AB打包）"><a href="#AssetBundle实战（AB打包）" class="headerlink" title="AssetBundle实战（AB打包）"></a>AssetBundle实战（AB打包）</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>AssetBundle打包实战项目，主要是AssetBundle怎么打包的，怎么加载以及卸载的过场和原理，随便倒了个资源包进来，进行实操。</p>
 <p>还有对相关理论问题的一些总结<span id="more"></span></p>
-<p>项目地址: <a href="https://github.com/GongQihua">传送门</a>, 演示视频在DEMO文件夹下。</p>
+<p>项目地址: <a href="https://github.com/GongQihua/AssetBundlePractise">传送门</a>, 演示视频在DEMO文件夹下。</p>
 <h2 id="编译器打包工具开发"><a href="#编译器打包工具开发" class="headerlink" title="编译器打包工具开发"></a>编译器打包工具开发</h2><blockquote>
 <p>打出的ab资源在工程同级的AssetBundle下</p>
 <p>可以无缝切换编辑器和AB加载方式</p>
@@ -493,14 +493,14 @@
       </tags>
   </entry>
   <entry>
-    <title>Unity UGUI框架实战</title>
+    <title>Unity UI框架实战</title>
     <url>/2024/06/02/UI%E6%A1%86%E6%9E%B6%E5%AE%9E%E6%88%98/</url>
     <content><![CDATA[<h1 id="UI框架实战"><a href="#UI框架实战" class="headerlink" title="UI框架实战"></a>UI框架实战</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>按理来说，个人开发应该直接找个轮椅用，去大厂大螺丝，应该有现成的用。但这个项目是手搓，最基本的那种，用来熟悉一下框架大概需要实现些什么，也是拖UI的底层基础。</p>
 <p>UI框架主要实现UILayer作为基类，分别实现Panel（面板）和Window（窗口、弹窗）层，配套搭配对应的PanelController和WindowController实现逻辑和显示的分离。<span id="more"></span></p>
 <p>通过UIFrame对外部暴露统一开启关闭界面等接口，在显示上合理的划分好节点，做好层级遮挡。</p>
 <p>对于Window实现队列和栈进行弹出的管理，Panel则不用。</p>
 <p>支持界面的传参（Properties类），搭配动画组件和事件系统，形成完整健全的UI框架。</p>
-<p>项目地址: <a href="https://github.com/GongQihua">传送门</a>, 演示视频在DEMO文件夹下。</p>
+<p>项目地址: <a href="https://github.com/GongQihua/UIFramework">传送门</a>, 演示视频在DEMO文件夹下。</p>
 <h2 id="框架的构建和关系"><a href="#框架的构建和关系" class="headerlink" title="框架的构建和关系"></a>框架的构建和关系</h2><p>UIFramework是核心框架，UIFramework example是实现，主要看前者</p>
 <p>其中核心类关系大概是：Controller，layer，动画，事件，和一些窗口属性</p>
 <p>代码自己看，这里只归纳一下大概的框架结构</p>
@@ -544,6 +544,7 @@
 <li>﻿﻿使用常见单例和观察者设计模式，注重逻辑解耦。</li>
 </ul>
 <p>由于用了状态机，项目庞大，不能向上个文档那样逐步详解了，只能写个各板块功能的概况，额外写一点项目中遇到的知识难点。<span id="more"></span></p>
+<p>项目地址: <a href="https://github.com/GongQihua/UnityOdyssey">传送门</a>, 演示视频在DEMO文件夹下。</p>
 <h2 id="设计文档"><a href="#设计文档" class="headerlink" title="设计文档"></a>设计文档</h2><p>这部分概述了代码各分块的功能和说明：</p>
 <p>核心代码是entity和playstate部分</p>
 <p>设计重点就是维护一个有限状态机，PlayerState包含N多状态，玩家一个时刻只能是处于一个状态，方便管理。而除了状态，切换状态也同样重要，例如<code>player.states.Change&lt;IdlePlayerState&gt;();</code></p>
@@ -638,7 +639,6 @@
 </ol>
 </li>
 </ol>
-<p>项目地址: <a href="https://github.com/GongQihua">传送门</a>, 演示视频在DEMO文件夹下。</p>
 ]]></content>
       <categories>
         <category>Unity</category>
