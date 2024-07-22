@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"gongqihua.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="XLua热更新简介Xlua热更新实战，用来熟悉xlua服务器与客户端交互  Lua之所以是热更新主流方案，是因为Lua是解释型语言，和图片，声音这些一样，都是资源。  仓库可以直接拉下来用 其中的NetBox可以理解为一个小服务器，直接打开挂着就行，里面的端口号可以改 在unity工程中，C#脚本Helloworld和test是输出。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XLua热更新">
+<meta property="og:url" content="https://gongqihua.github.io/2024/07/20/XLua%E7%83%AD%E6%9B%B4%E6%96%B0/index.html">
+<meta property="og:site_name" content="Qihua&#39;s Blog">
+<meta property="og:description" content="XLua热更新简介Xlua热更新实战，用来熟悉xlua服务器与客户端交互  Lua之所以是热更新主流方案，是因为Lua是解释型语言，和图片，声音这些一样，都是资源。  仓库可以直接拉下来用 其中的NetBox可以理解为一个小服务器，直接打开挂着就行，里面的端口号可以改 在unity工程中，C#脚本Helloworld和test是输出。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-07-20T05:06:00.000Z">
+<meta property="article:modified_time" content="2024-07-22T08:26:13.413Z">
+<meta property="article:author" content="Qihua Gong">
+<meta property="article:tag" content="XLua">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://gongqihua.github.io/2024/07/20/XLua%E7%83%AD%E6%9B%B4%E6%96%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>XLua热更新 | Qihua's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Qihua's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Personal Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-resume">
+
+    <a href="/file/CV_Qihua%20Gong_EN.pdf" rel="section"><i class="fa fa-file fa-fw"></i>Resume</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gongqihua.github.io/2024/07/20/XLua%E7%83%AD%E6%9B%B4%E6%96%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s2.loli.net/2024/02/27/t6ipmhvbDjX7zn5.jpg">
+      <meta itemprop="name" content="Qihua Gong">
+      <meta itemprop="description" content="Qihua Personal Blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qihua's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          XLua热更新
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-07-20 13:06:00" itemprop="dateCreated datePublished" datetime="2024-07-20T13:06:00+08:00">2024-07-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-07-22 16:26:13" itemprop="dateModified" datetime="2024-07-22T16:26:13+08:00">2024-07-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Lua/" itemprop="url" rel="index"><span itemprop="name">Lua</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="XLua热更新"><a href="#XLua热更新" class="headerlink" title="XLua热更新"></a>XLua热更新</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Xlua热更新实战，用来熟悉xlua服务器与客户端交互</p>
+<blockquote>
+<p>Lua之所以是热更新主流方案，是因为Lua是解释型语言，和图片，声音这些一样，都是资源。</p>
+</blockquote>
+<p>仓库可以直接拉下来用</p>
+<p>其中的NetBox可以理解为一个小服务器，直接打开挂着就行，里面的端口号可以改</p>
+<p>在unity工程中，C#脚本Helloworld和test是输出。<span id="more"></span></p>
+<p>项目传送门：<a target="_blank" rel="noopener" href="https://github.com/GongQihua/XLua_Update">传送门</a></p>
+<h2 id="核心设计逻辑"><a href="#核心设计逻辑" class="headerlink" title="核心设计逻辑"></a>核心设计逻辑</h2><h3 id="用法简介"><a href="#用法简介" class="headerlink" title="用法简介"></a>用法简介</h3><p>Helloworld和test两个文件里的输出随便改一下，然后点击菜单栏“Tools&#x2F;AB包加密&#x2F;创建AB包版本文件&#x2F;Window 版本“</p>
+<p>此时输出的文件在AssetBundlesEncrypt里，复制到Net Box Server&#x2F;Test&#x2F;Web下</p>
+<p>再把刚才改的两个文件还原一下，运行Unity会看到热更新文件下载到了C:\Users\Administrator\AppData\LocalLow\DefaultCompany\Learn_HotUpdate1目录下</p>
+<p>输出的内容就是Web服务器上改动过的内容</p>
+<h3 id="代码核心"><a href="#代码核心" class="headerlink" title="代码核心"></a>代码核心</h3><p>HotUpdateMgr</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"><span class="keyword">using</span> UnityEngine.Networking;</span><br><span class="line"><span class="keyword">using</span> System.IO;</span><br><span class="line"><span class="keyword">using</span> System.Text;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">HotUpdateMgr</span> : <span class="title">MonoSingletonBase</span>&lt;<span class="title">HotUpdateMgr</span>&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> _sBaseUrl下载网址</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">if</span> UNITY_EDITOR || UNITY_STANDALONE_WIN</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">string</span> _sBaseUrl = <span class="string">&quot;http://127.0.0.1:5858&quot;</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">elif</span> UNITY_ANDROID</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">string</span> _sBaseUrl = <span class="string">&quot;http://192.168.255.10:5858&quot;</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">elif</span> UNITY_IPHONE</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">string</span> _sBaseUrl = <span class="string">&quot;http://192.168.255.10:5858&quot;</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">string</span> _sABVersionName = <span class="string">&quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 本地版本信息缓存路径</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">string</span> _sVersionLocalFilePath = <span class="string">&quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 同时下载的最大数量</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> _nMaxDownloader = <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 当前需要下载的AB包数据</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    List&lt;ABPackInfo&gt; _list_allNeedABPack = <span class="keyword">new</span> List&lt;ABPackInfo&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 所需下载资源总大小</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">float</span> _nDownloadTotalSize = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 当前已下载资源的大小</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">float</span> _nCurDownloadedSize = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> AB包下载器</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">private</span> List&lt;ABDownloader&gt; _list_allABDownloader = <span class="keyword">new</span> List&lt;ABDownloader&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 客户端的AB版本数据</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">private</span> Dictionary&lt;<span class="built_in">string</span>, ABPackInfo&gt; _dict_clientABInfoList = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Awake</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">string</span> sPlatformStr = ABPackUtils.GetABPackPathPlatformStr();</span><br><span class="line">        _sABVersionName = sPlatformStr + ABPackUtils.sABVersionName;</span><br><span class="line">        _sVersionLocalFilePath = Application.persistentDataPath + _sABVersionName;</span><br><span class="line">        IOUtils.CreateDirectroryOfFile(_sVersionLocalFilePath);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 开始热更</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">StartHotUpdate</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Debug.Log(<span class="string">&quot;开始热更 &gt;&gt;&gt;&gt;&gt;&gt; &quot;</span>);</span><br><span class="line">        StartCoroutine(DownloadAllABPackVersion());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 解析版本文件，返回一个文件列表</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;sContent&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;returns&gt;</span><span class="doctag">&lt;/returns&gt;</span></span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Dictionary&lt;<span class="built_in">string</span>, ABPackInfo&gt; <span class="title">ConvertToAllABPackDesc</span>(<span class="params"><span class="built_in">string</span> sContent</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        Dictionary&lt;<span class="built_in">string</span>, ABPackInfo&gt; dict_allABPackDesc = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">string</span>, ABPackInfo&gt;();</span><br><span class="line">        <span class="built_in">string</span>[] arrLines = sContent.Split(<span class="string">&#x27;\n&#x27;</span>);<span class="comment">//用回车 字符 \n 分割每一行</span></span><br><span class="line">        <span class="keyword">foreach</span> (<span class="built_in">string</span> item <span class="keyword">in</span> arrLines)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">string</span>[] arrData = item.Split(<span class="string">&#x27; &#x27;</span>);<span class="comment">//用空格分割每行数据的三个类型</span></span><br><span class="line">            <span class="keyword">if</span> (arrData.Length == <span class="number">3</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                ABPackInfo obj_ABPackData = <span class="keyword">new</span> ABPackInfo();</span><br><span class="line">                obj_ABPackData.sABName = arrData[<span class="number">0</span>]; <span class="comment">// 名称即路径</span></span><br><span class="line">                obj_ABPackData.sMd5 = arrData[<span class="number">1</span>]; <span class="comment">// md5值</span></span><br><span class="line">                obj_ABPackData.nSize = <span class="built_in">int</span>.Parse(arrData[<span class="number">2</span>]); <span class="comment">// AB包大小</span></span><br><span class="line"></span><br><span class="line">                <span class="comment">//Debug.Log(string.Format(&quot;解析的路径：&#123;0&#125;\n解析的MD5：&#123;1&#125;\n解析的文件大小KB：&#123;2&#125;&quot;, obj_ABPackData.sABName, obj_ABPackData.sMd5, obj_ABPackData.nSize));</span></span><br><span class="line">                dict_allABPackDesc.Add(obj_ABPackData.sABName, obj_ABPackData);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> dict_allABPackDesc;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 获取服务端的AB包版本信息</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;returns&gt;</span><span class="doctag">&lt;/returns&gt;</span></span></span><br><span class="line">    <span class="function">IEnumerator <span class="title">DownloadAllABPackVersion</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">string</span> sVersionUrl = _sBaseUrl + <span class="string">@&quot;/&quot;</span> + _sABVersionName;</span><br><span class="line">        <span class="comment">//Debug.Log(&quot;下载版本数据路径：&quot; + sVersionUrl);</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">using</span> (UnityWebRequest uObj_versionWeb = UnityWebRequest.Get(sVersionUrl))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">yield</span> <span class="keyword">return</span> uObj_versionWeb.SendWebRequest(); <span class="comment">// 等待资源下载</span></span><br><span class="line">            <span class="keyword">if</span> (uObj_versionWeb.isNetworkError || uObj_versionWeb.isHttpError)</span><br><span class="line">            &#123;</span><br><span class="line">                Debug.LogError(<span class="string">&quot;获取版本AB包数据错误: &quot;</span> + uObj_versionWeb.error);</span><br><span class="line">                <span class="keyword">yield</span> <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="built_in">string</span> sVersionData = uObj_versionWeb.downloadHandler.text;</span><br><span class="line">                <span class="comment">//Debug.Log(&quot;成功获取到版本相关数据 &gt;&gt;&gt;&gt; \n&quot; + sVersionData);</span></span><br><span class="line">                CheckNeedDownloadABPack(sVersionData);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 检测需要下载</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;sServerVersionData&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">CheckNeedDownloadABPack</span>(<span class="params"><span class="built_in">string</span> sServerVersionData</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//Debug.Log(&quot;运行平台：&quot; + Application.platform);</span></span><br><span class="line">        <span class="comment">//Debug.Log(&quot;本地版本文件路径是：&quot; + _sVersionLocalFilePath);</span></span><br><span class="line"></span><br><span class="line">        Dictionary&lt;<span class="built_in">string</span>, ABPackInfo&gt; dict_serverDownList = ConvertToAllABPackDesc(sServerVersionData); <span class="comment">// 服务端获取的资源下载列表</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (File.Exists(_sVersionLocalFilePath))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//Debug.Log(&quot;存在本地，对比服务器版本信息&quot;);</span></span><br><span class="line">            <span class="built_in">string</span> sClientVersionData = File.ReadAllText(_sVersionLocalFilePath); <span class="comment">// 本地版本信息</span></span><br><span class="line">            _dict_clientABInfoList = ConvertToAllABPackDesc(sClientVersionData); <span class="comment">// 客户端本地缓存的资源下载列表</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">//遍历服务器文件</span></span><br><span class="line">            <span class="keyword">foreach</span> (ABPackInfo obj_itemData <span class="keyword">in</span> dict_serverDownList.Values)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// 存在对应已下载文件，对比Md5值是否一致</span></span><br><span class="line">                <span class="keyword">if</span> (_dict_clientABInfoList.ContainsKey(obj_itemData.sABName))</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="comment">// md5值不一致，则更新文件</span></span><br><span class="line">                    <span class="keyword">if</span> (_dict_clientABInfoList[obj_itemData.sABName].sMd5 != obj_itemData.sMd5)</span><br><span class="line">                    &#123;</span><br><span class="line">                        _list_allNeedABPack.Add(obj_itemData);</span><br><span class="line">                        _nDownloadTotalSize = _nDownloadTotalSize + obj_itemData.nSize;</span><br><span class="line"></span><br><span class="line">                        <span class="comment">//Debug.Log(&quot;MD5 值不一样，资源存在变更，增加文件 &gt;&gt;&gt;&gt;&gt; &quot; + obj_itemData.sABName);</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    _list_allNeedABPack.Add(obj_itemData);</span><br><span class="line">                    _nDownloadTotalSize = _nDownloadTotalSize + obj_itemData.nSize;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="comment">// 如果说不存在本地缓存，那就直接下载所有的AB包</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">foreach</span> (ABPackInfo obj_itemData <span class="keyword">in</span> dict_serverDownList.Values)</span><br><span class="line">            &#123;</span><br><span class="line">                _list_allNeedABPack.Add(obj_itemData);</span><br><span class="line">                _nDownloadTotalSize = _nDownloadTotalSize + obj_itemData.nSize;</span><br><span class="line">                <span class="comment">//Debug.Log(&quot;所需下载文件 &gt;&gt;&gt;&gt;&gt; &quot; + obj_itemData.sABName);</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        StartDownloadAllABPack();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 开始下载所有所需下载的AB包资源</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;list_allABPack&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">StartDownloadAllABPack</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">int</span> nMaxCount = _list_allNeedABPack.Count;</span><br><span class="line">        <span class="keyword">if</span> (nMaxCount &lt;= <span class="number">0</span>) </span><br><span class="line">        &#123;</span><br><span class="line">            HotUpdateEnd();</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">int</span> nNeedCount = Mathf.Min(nMaxCount, _nMaxDownloader);</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; nNeedCount; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            ABPackInfo obj_ABPackDesc = _list_allNeedABPack[<span class="number">0</span>];</span><br><span class="line">            ABDownloader obj_downloader = <span class="keyword">new</span> ABDownloader();</span><br><span class="line">            _list_allABDownloader.Add(obj_downloader);</span><br><span class="line">            StartCoroutine(obj_downloader.DownloadABPack(obj_ABPackDesc));</span><br><span class="line">            _list_allNeedABPack.RemoveAt(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 切换下载下一个AB包</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;obj_ABDownloader&quot;&gt;</span>需要切换的下载器<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ChangeDownloadNextABPack</span>(<span class="params">ABDownloader obj_ABDownloader</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//Debug.Log(&quot;切换下载下一个 AB 包&quot;);</span></span><br><span class="line">        _nCurDownloadedSize += obj_ABDownloader.GetDownloadResSize();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (_list_allNeedABPack.Count &gt; <span class="number">0</span>) <span class="comment">// 还存在需要下载的资源，下载器切换资源，继续下载</span></span><br><span class="line">        &#123;</span><br><span class="line">            StartCoroutine(obj_ABDownloader.DownloadABPack(_list_allNeedABPack[<span class="number">0</span>]));</span><br><span class="line">            _list_allNeedABPack.RemoveAt(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">bool</span> bIsDownloadSuc = <span class="literal">true</span>; <span class="comment">// 资源是否全部下载完成</span></span><br><span class="line">            <span class="keyword">foreach</span>(ABDownloader obj_downloader <span class="keyword">in</span> _list_allABDownloader)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(obj_downloader.bIsDownloading) <span class="comment">// 存在一个下载中，即表示当前还有未下载完成的部分</span></span><br><span class="line">                &#123;</span><br><span class="line">                    bIsDownloadSuc = <span class="literal">false</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (bIsDownloadSuc) <span class="comment">// 已完成全部下载</span></span><br><span class="line">            &#123;</span><br><span class="line">                HotUpdateEnd();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 更新本地缓存的AB包版本数据</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;obj_ABPackDecs&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">UpdateClientABInfo</span>(<span class="params">ABPackInfo obj_ABPackDecs</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (_dict_clientABInfoList == <span class="literal">null</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            _dict_clientABInfoList = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">string</span>, ABPackInfo&gt;();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        _dict_clientABInfoList[obj_ABPackDecs.sABName] = obj_ABPackDecs;</span><br><span class="line"></span><br><span class="line">        StringBuilder obj_sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="keyword">foreach</span> (ABPackInfo obj_temp <span class="keyword">in</span> _dict_clientABInfoList.Values)</span><br><span class="line">        &#123;</span><br><span class="line">            obj_sb.AppendLine(ABPackUtils.GetABPackVersionStr(obj_temp.sABName, obj_temp.sMd5, obj_temp.nSize.ToString()));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        IOUtils.CreatTextFile(_sVersionLocalFilePath, obj_sb.ToString());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 热更新结束，进入下一个阶段</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">HotUpdateEnd</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// TODO 进入下一个阶段</span></span><br><span class="line">        Debug.Log(<span class="string">&quot;热更新: 已完成所有的AB包下载, 进入下一个阶段 TODO&quot;</span>);</span><br><span class="line">        HotUpdateTest.GetInstance().RunLua();</span><br><span class="line">        HotUpdateTest.GetInstance().InitShow();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注释写的很全了</p>
+<p>核心逻辑就是对比下版本号，下载到可读写目录，优先读这个目录就可以了</p>
+<h2 id="XLua热更新步骤"><a href="#XLua热更新步骤" class="headerlink" title="XLua热更新步骤"></a>XLua热更新步骤</h2><ol>
+<li><p>下载<a target="_blank" rel="noopener" href="https://github.com/Tencent/xLua">xLua插件</a>，解压后将该目录中Assets文件夹下的所有资源复制到Unity工程的Assets文件夹下。</p>
+</li>
+<li><p>在Unity编辑器（File-&gt;Build Settings-&gt;Player Settings-&gt;Other Settings-&gt;Scripting Define Symbols）下中添加HOTFIX_ENABLE宏以支持xLua热更新，Unity编辑器和各个手机平台都要添加。建议平时用Lua写业务逻辑时可以关闭HOTFIX_ENABLE宏，当打包手机版本或者在编辑器下开发补丁时才添加HOTFIX_ENABLE宏。</p>
+</li>
+<li><p>对所有较大可能变动的类型加上[Hotfix]标签。如果可能变动的类比较多，手动添加比较麻烦，一般游戏初次上线时，由于不确定添加哪些类，因此我们可以用反射将当前程序集下的所有类自动加上[Hotfix]标签，还可以按某个namespace或目录等条件进行设置。代码如下：</p>
+</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">Hotfix</span>]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Type&gt; by_property</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">get</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 需要using System.Linq;</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="keyword">from</span> type <span class="keyword">in</span> Assembly.Load(<span class="string">&quot;Assembly-CSharp&quot;</span>).GetTypes()</span><br><span class="line">                <span class="keyword">where</span> type.Namespace == <span class="string">&quot;XXXX&quot;</span></span><br><span class="line">                <span class="keyword">select</span> type).ToList();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>新建一个MonoBehavior脚本并挂载到需要热更新的场景中，然后在Awake函数中新建一个Lua虚拟机用于加载和执行Lua热更新脚本文件。代码如下：</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 需要using XLua;</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Awake</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 新建一个Lua虚拟机，为减少开销，建议全局唯一。</span></span><br><span class="line">    LuaEnv luaEnv = <span class="keyword">new</span> LuaEnv();</span><br><span class="line">    <span class="comment">// DoString表示执行Lua代码，由于Unity不能识别.lua文件，只能把Lua文件变成文本文件进行读取。</span></span><br><span class="line">    <span class="comment">// require用于加载Lua文件，内置多个Loader加载器，我们也可以自己写Loader。</span></span><br><span class="line">    luaEnv.DoString(<span class="string">&quot;require &#x27;hotfix&#x27;&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在游戏对象被销毁时，释放Lua虚拟机内存。</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">OnDestroy</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    luaEnv.Dispose();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>由于xLua内置了从Resources目录下加载Lua文本文件，因此我们新建一个hotfix.lua.txt文本文件，然后在里面用Lua实现热更新逻辑。代码如下：</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// CS.XXX表示在C#代码中打[HotFix]标签的XXX类，&quot;Start&quot;表示XXX类中要进行更改的Start函数， </span></span><br><span class="line"><span class="comment">// function(self)表示Start函数更改后的函数逻辑，待热更新完后XXX类的Start函数就会执行function(self)中的代码逻辑。</span></span><br><span class="line">xlua.hotfix(CS.XXX, <span class="string">&quot;Start&quot;</span>, function(self)</span><br><span class="line">            print(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line">            end)</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li><p>点击Unity编辑器的XLua&#x2F;Generate Code工具，该操作会收集所有打上[HotFix]标签的类并生成适配代码。</p>
+</li>
+<li><p>点击Unity编辑器的XLua&#x2F;Hotfix inject in Editor工具，该操作会对所有打上[HotFix]标签的类进行IL注入。</p>
+</li>
+<li><p>运行游戏，若发现XXX类的Start函数输出了hello world，则表示热更新成功，即整个热更新流程就走完了。</p>
+</li>
+</ol>
+<h2 id="热更新底层原理"><a href="#热更新底层原理" class="headerlink" title="热更新底层原理"></a>热更新底层原理</h2><p>不限于XLua，XLua只是工具，核心还是C#和Lua的交互</p>
+<p><strong>C#调用Lua：</strong></p>
+<p>C#生成Bridge文件，Bridge调用dll文件（dll是C写的库），先调用Lua中的dll文件，再由dll文件执行Lua代码。</p>
+<p>C#-&gt; Bridge -&gt; dll -&gt; Lua &#x2F; C#-&gt; dll -&gt; Lua</p>
+<p><strong>Lua调用C#：</strong></p>
+<p>先生成Wrap文件（中间文件&#x2F;配置文件），wrap文件把字段方法注册到lua虚拟机中（解释器Iuajit），然后Lua通过wrap就可以调C#了。</p>
+<h3 id="碎碎念（项目中的代码底层原理）"><a href="#碎碎念（项目中的代码底层原理）" class="headerlink" title="碎碎念（项目中的代码底层原理）"></a>碎碎念（项目中的代码底层原理）</h3><p>这里的XLua，xLua实际上是C#和Lua进行交互的桥梁，因此xLua不仅可以用于热更新，还可以借助它用Lua实现游戏中一些性能要求不高的业务逻辑。</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">Hotfix</span>]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Test</span> : <span class="title">MonoBehaviour</span> </span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span> ()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 接下来对Start函数进行热更新，改为输出Hello World。</span></span><br><span class="line">        Debug.Log(<span class="string">&quot;test&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Update</span> ()</span></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Test类打上[HotFix]标签后，执行XLua&#x2F;Generate Code后，xLua会根据内置的模板代码生成器在XLua目录下的Gen目录中生成一个DelegatesGensBridge.cs文件，该文件在XLua命名空间下生成一个DelegateBridge类，这个类中的__Gen_Delegate_Imp*函数会映射到xlua.hotfix中的function。代码如下：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">XLua</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">partial</span> <span class="keyword">class</span> <span class="title">DelegateBridge</span> : <span class="title">DelegateBridgeBase</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// DelegateBridge类的关键函数__Gen_Delegate_Imp*</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> __Gen_Delegate_Imp0(<span class="built_in">object</span> p0)</span><br><span class="line">        &#123;</span><br><span class="line">            RealStatePtr L = luaEnv.rawL;</span><br><span class="line">            <span class="comment">// luaReference就是指向xlua.hotfix(CS.XXX, &quot;Start&quot;, function(self))的function</span></span><br><span class="line">            <span class="built_in">int</span> errFunc = LuaAPI.pcall_prepare(L, errorFuncRef, luaReference);</span><br><span class="line">            ObjectTranslator translator = luaEnv.translator;</span><br><span class="line">            translator.PushAny(L, p0);</span><br><span class="line">            PCall(L, <span class="number">1</span>, <span class="number">0</span>, errFunc);</span><br><span class="line">            LuaAPI.lua_settop(L, errFunc - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>生成适配器代码后，执行XLua&#x2F;Hotfix inject in Editor后，xLua会使用Mono.Cecil库对当前工程下的Assembly-CSharp.dll程序集进行IL注入。IL是.NET平台上的C#、F#等高级语言编译后产生的中间代码，该中间代码IL再经.NET平台中的CLR（类似于JVM）编译成机器码让CPU执行相关指令。由于移动平台无法把C#代码编译成IL中间代码，所以绝大多数热更新方案都会涉及到IL注入，只有这样Unity内置的VM才能对热更新的代码进行处理。</p>
+<p>Mono是社区对.NET Framework的跨平台实现方案，实现了.NET Framework的绝大部分类库，因此基于Mono研发的Unity引擎才具有跨平台能力。而Mono VM就是基于Mono框架实现的，不同的平台实现不同的Mono VM，从而可以不同平台上执行C#脚本。由于IL代码是C#代码编译而来的，因此我们可以借用ILSpy工具对C#编译出来的程序集DLL文件进行反编译得到C#源代码，看看IL注入后打上[HotFix]标签的类的变化。注入后的C#代码如下：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">Hotfix(HotfixFlag.Stateless)</span>]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Test</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 构造函数对应的DelegateBridge变量</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> DelegateBridge _c__Hotfix0_ctor;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> DelegateBridge __Hotfix0_Start;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> DelegateBridge __Hotfix0_Update;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> DelegateBridge __Hotfix0_TestFunc;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Test</span>()</span></span><br><span class="line"><span class="function">        : <span class="title">this</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            _c__Hotfix0_ctor?.__Gen_Delegate_Imp0(<span class="keyword">this</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        DelegateBridge _Hotfix0_Start = __Hotfix0_Start;</span><br><span class="line">        <span class="comment">// 如果lua脚本里定义了热更新函数，就执行对应的热更新函数逻辑。</span></span><br><span class="line">        <span class="keyword">if</span> (_Hotfix0_Start != <span class="literal">null</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            _Hotfix0_Start.__Gen_Delegate_Imp0(<span class="keyword">this</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            Debug.Log((<span class="built_in">object</span>)<span class="string">&quot;test&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        __Hotfix0_Update?.__Gen_Delegate_Imp0(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">TestFunc</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        __Hotfix0_TestFunc?.__Gen_Delegate_Imp0(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从反编译的C#代码看出，xLua进行IL注入时会为打上[Hotfix]标签的类的所有函数创建一个DelegateBridge变量，同时添加对应的判断条件。如果Lua脚本中添加了对应的热更新函数，DelegateBridge变量就不为空，并将DelegateBridge变量中的__Gen_Delegate_Imp0方法指向xlua.hotfix(CS.XXX, “Start”, function(self))中的具体function。这时由于DelegateBridge变量不为空，所以C#中的函数就会执行Lua脚本中对应的热更新函数逻辑。但如果没有定义对应的热更新函数，或对应的热更新函数为nil，DelegateBridge变量就为空，则C#中的函数依然执行原有的函数逻辑。因此，xLua热更新实际上就是在运行时用Lua函数替换对应的C#函数。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/XLua/" rel="tag"># XLua</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/07/01/Unity%E5%A5%A5%E5%BE%B7%E8%B5%9B/" rel="prev" title="Unity莉丽冒险世界">
+      <i class="fa fa-chevron-left"></i> Unity莉丽冒险世界
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#XLua%E7%83%AD%E6%9B%B4%E6%96%B0"><span class="nav-number">1.</span> <span class="nav-text">XLua热更新</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E8%AE%BE%E8%AE%A1%E9%80%BB%E8%BE%91"><span class="nav-number">1.2.</span> <span class="nav-text">核心设计逻辑</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%B3%95%E7%AE%80%E4%BB%8B"><span class="nav-number">1.2.1.</span> <span class="nav-text">用法简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E6%A0%B8%E5%BF%83"><span class="nav-number">1.2.2.</span> <span class="nav-text">代码核心</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XLua%E7%83%AD%E6%9B%B4%E6%96%B0%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.3.</span> <span class="nav-text">XLua热更新步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%83%AD%E6%9B%B4%E6%96%B0%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86"><span class="nav-number">1.4.</span> <span class="nav-text">热更新底层原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A2%8E%E7%A2%8E%E5%BF%B5%EF%BC%88%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E4%BB%A3%E7%A0%81%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%EF%BC%89"><span class="nav-number">1.4.1.</span> <span class="nav-text">碎碎念（项目中的代码底层原理）</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Qihua Gong"
+      src="https://s2.loli.net/2024/02/27/t6ipmhvbDjX7zn5.jpg">
+  <p class="site-author-name" itemprop="name">Qihua Gong</p>
+  <div class="site-description" itemprop="description">Qihua Personal Blog</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/gongqihua" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;gongqihua" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:gongqihua0115@gmail.com" title="E-Mail → mailto:gongqihua0115@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/gongqihua0115/" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;gongqihua0115&#x2F;" rel="noopener" target="_blank"><i class="fab fa-linkedin fa-fw"></i>Linkedin</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/profiles/76561198189728994/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;profiles&#x2F;76561198189728994&#x2F;" rel="noopener" target="_blank"><i class="fab fa-steam fa-fw"></i>Steam</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="/file/CV_QihuaGong_CN.pdf" title="&#x2F;file&#x2F;CV_QihuaGong_CN.pdf">中文简历</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="/file/CV_Game_CN.pdf" title="&#x2F;file&#x2F;CV_Game_CN.pdf">中文简历_游戏</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qihua Gong</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
